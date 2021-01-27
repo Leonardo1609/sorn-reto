@@ -1,13 +1,8 @@
-import { Response } from 'express';
-import User from '../model/User';
+import { Request, Response } from 'express';
 import Vehicle from "../model/Vehicle";
 
-export const createVehicle = async ( req: any, res: Response ) => {
-    const id = req.userId;
-
-    const user = User.findByPk( id );
-
-    if ( !user ) return res.send( 404 ).json({ msg: 'Unauthorized' });
+// Create a new vehicle
+export const createVehicle = async ( req: Request, res: Response ) => {
 
     try {
         const { vin } = req.body;
@@ -29,9 +24,9 @@ export const createVehicle = async ( req: any, res: Response ) => {
     }
 }
 
-export const getVehicles = async ( req: any, res: Response ) => {
+// Get all vehicles
+export const getVehicles = async ( req: Request, res: Response ) => {
     try {
-
         const vehicles = await Vehicle.findAll();
         return res.json({ vehicles });
 

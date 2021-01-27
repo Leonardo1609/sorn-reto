@@ -1,4 +1,13 @@
-import { createObservation, deleteObservation, getObservations, getObservationsStates, updateObservation, updateStateOfVehicle } from "../controllers/observationController";
+import { 
+    createObservation, 
+    deleteObservation, 
+    getObservations, 
+    updateObservation, 
+    updateStateOfVehicle, 
+    getCountObservationPerState, 
+    getQuantityObservationsPerUsersAndState 
+} from "../controllers/observationController";
+
 import { Router } from "express";
 import { check } from "express-validator";
 import auth from "../middlewares/auth";
@@ -25,15 +34,20 @@ export default () => {
         deleteObservation 
     );
 
-    router.get('/observations',
+    router.get('/all',
         auth,
         getObservations 
     );
 
     router.get('/observation-states',
         auth,
-        getObservationsStates
+        getCountObservationPerState
     );
+
+    router.get('/observation-per-user',
+        auth,
+        getQuantityObservationsPerUsersAndState
+    )
     
     return router;
 }

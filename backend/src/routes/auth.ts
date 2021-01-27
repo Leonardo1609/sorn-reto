@@ -1,10 +1,15 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { createUserByAdmin, getUsers, registUser, signInUser, verifyUser } from '../controllers/authController';
+import { 
+    createUserByAdmin, 
+    getUsers, 
+    registUser, 
+    signInUser, 
+    verifyUser 
+} from '../controllers/authController';
 import auth from '../middlewares/auth';
 const router = Router();
 
-// authController
 export default () => {
 
     router.post('/', [
@@ -17,7 +22,7 @@ export default () => {
         verifyUser
     );
 
-    router.post('/signIn',[
+    router.post('/signin',[
         check('username', 'Username field is required').notEmpty(),
         check('password', 'Password field is required').notEmpty()
     ], signInUser);

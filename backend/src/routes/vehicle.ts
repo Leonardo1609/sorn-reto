@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createVehicle, getVehicles } from "../controllers/vehiculeController";
+import { 
+    createVehicle, 
+    getVehicles 
+} from "../controllers/vehiculeController";
 import auth from "../middlewares/auth";
 
 const router = Router();

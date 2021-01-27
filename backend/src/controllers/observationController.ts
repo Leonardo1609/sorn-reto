@@ -3,7 +3,9 @@ import State from '../model/State';
 import Observation from "../model/Observation";
 import User from '../model/User';
 import Vehicle from '../model/Vehicle';
+import { Sequelize } from 'sequelize';
 
+// Create new observation
 export const createObservation = async ( req: any, res: Response ) => {
     try {
         const createdBy = req.userId;
@@ -20,6 +22,7 @@ export const createObservation = async ( req: any, res: Response ) => {
     }
 }
 
+// Update (solve) the state of observation ( just the owner of the observation can't do this )
 export const updateStateOfVehicle = async ( req: any, res: Response ) => {
     try {
         const userId = req.userId;
@@ -49,6 +52,8 @@ export const updateStateOfVehicle = async ( req: any, res: Response ) => {
     }
 }
 
+
+// Modify detail of observation ( just the owner of the observation can do this )
 export const updateObservation = async ( req: any, res: Response ) => {
     try {
         const userId = req.userId;
@@ -111,6 +116,7 @@ export const getObservations = async ( req: any, res: Response ) => {
             attributes: [ 'vin' ],
             as: 'vehicle'
         }] });
+
         res.json({ observations });
 
     } catch (error) {
@@ -119,17 +125,35 @@ export const getObservations = async ( req: any, res: Response ) => {
     }
 }
 
-export const getObservationsStates = async ( req: any, res: Response ) => {
+export const getCountObservationPerState = async ( req: any, res: Response ) => {
     try {
-        const states: any = await State.findAll({ attributes: ['id'] });
+        const { count }: any = await Observation.findAndCountAll({ 
+            attributes: [ 'idState' ], 
+            group: ['idState']
+        });
 
-        const observationPromises: any[] = [];
+        res.json({ quantityPerState: count });
+        
+    } catch (error) {
+        console.log( error );
+        res.send( 500 ).json({ msg: "There was an error" });        
+    }
+}
 
-        states.forEach( ( { id }: any ) => {
-            observationPromises.push( Observation.findAndCountAll({ where: { idState: id }}) );
-        } )
-
-        const observations = await Promise.all( observationPromises );
+export const getQuantityObservationsPerUsersAndState = async ( req: any, res: Response ) => {
+    try {
+        const observations = await Observation.findAll({ 
+            include: [
+                { 
+                    model: User,
+                    as: 'creator',
+                    required: true,
+                    attributes: [ 'username' ]
+                }
+            ],
+            attributes: [ 'idState', [ Sequelize.fn( 'COUNT', Sequelize.col('creator.id') ), 'observationQuantity' ], 'createdBy' ],
+            group: [ 'createdBy', 'idState', 'creator.username' ]
+        });
 
         res.json({ observations });
         
@@ -137,5 +161,4 @@ export const getObservationsStates = async ( req: any, res: Response ) => {
         console.log( error );
         res.send( 500 ).json({ msg: "There was an error" });        
     }
-
 }

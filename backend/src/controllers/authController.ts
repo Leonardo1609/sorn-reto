@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import User from "../model/User";
 import jwt from 'jsonwebtoken';
 
+// An user regist himself
 export const registUser = async ( req: Request, res: Response ) => {
 
     const errors = validationResult( req );
@@ -43,6 +44,7 @@ export const registUser = async ( req: Request, res: Response ) => {
     }
 }
 
+// Verify user after the auth middleware ( route/auth.ts : 16 )
 export const verifyUser = async ( req: any, res: Response ) => {
 
     const id = req.userId;
@@ -56,6 +58,7 @@ export const verifyUser = async ( req: any, res: Response ) => {
     }
 }
 
+// Login user
 export const signInUser = async ( req: Request, res: Response ) => {
     const errors = validationResult( req );
 
@@ -94,13 +97,14 @@ export const signInUser = async ( req: Request, res: Response ) => {
     }
 }
 
+// Create user by admin
 export const createUserByAdmin = async ( req: any, res: Response ) => {
 
     const id = req.userId;
 
-    const user = await User.findByPk( id );
+    const user: any = await User.findByPk( id );
 
-    if( user?.get('role') !== 'admin' ) return res.status( 403 ).json({ msg: 'Unauthorized' })
+    if( user.role !== 'admin' ) return res.status( 403 ).json({ msg: 'Unauthorized' })
 
     const errors = validationResult( req );
     if ( !errors.isEmpty() ) return res.status( 400 ).json({ errors: errors.array() });
@@ -129,7 +133,8 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
     }
 }
 
-export const getUsers = async ( req: any, res: Response ) => {
+// Get all users
+export const getUsers = async ( req: Request, res: Response ) => {
     try {
         const users = await User.findAll({ attributes: ['id', 'username']})    
 
