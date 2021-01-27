@@ -14,6 +14,4 @@ const Vehicle = db.define('Vehicle', {
     }
 });
 
-Vehicle.hasMany( Observation );
-
 export default Vehicle;

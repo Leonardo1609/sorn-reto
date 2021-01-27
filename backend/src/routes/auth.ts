@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { createUserByAdmin, registUser, signInUser, verifyUser } from '../controllers/authController';
+import { createUserByAdmin, getUsers, registUser, signInUser, verifyUser } from '../controllers/authController';
 import auth from '../middlewares/auth';
 const router = Router();
 
@@ -26,6 +26,11 @@ export default () => {
         check('username', 'Username field is required').notEmpty(),
         check('password', 'Password field is required').notEmpty()
     ], createUserByAdmin);
+
+    router.get('/all',
+        auth,
+        getUsers
+    );
 
     return router;
 }

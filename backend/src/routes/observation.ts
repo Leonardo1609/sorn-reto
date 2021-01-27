@@ -1,4 +1,4 @@
-import { createObservation, updateStateOfVehicle } from "../controllers/observationController";
+import { createObservation, deleteObservation, getObservations, getObservationsStates, updateObservation, updateStateOfVehicle } from "../controllers/observationController";
 import { Router } from "express";
 import { check } from "express-validator";
 import auth from "../middlewares/auth";
@@ -10,9 +10,29 @@ export default () => {
         check('detail', 'Detail field is required').notEmpty()
     ], createObservation );
 
-    router.patch('/:observationId',
+    router.patch('/solve/:observationId',
         auth,
         updateStateOfVehicle
+    );
+
+    router.patch('/:observationId',
+        auth,
+        updateObservation
+    );
+
+    router.delete('/:observationId',
+        auth,
+        deleteObservation 
+    );
+
+    router.get('/observations',
+        auth,
+        getObservations 
+    );
+
+    router.get('/observation-states',
+        auth,
+        getObservationsStates
     );
     
     return router;

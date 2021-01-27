@@ -128,3 +128,14 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
         res.status( 500 ).json({ msg: 'There was an error' });
     }
 }
+
+export const getUsers = async ( req: any, res: Response ) => {
+    try {
+        const users = await User.findAll({ attributes: ['id', 'username']})    
+
+        res.json({ users });
+    } catch (error) {
+        console.log( error );
+        res.status( 500 ).json({ msg: 'There was an error' });
+    }
+}

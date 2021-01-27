@@ -2,6 +2,7 @@ import { DataTypes } from "sequelize";
 import { db } from "../config/db";
 import State from "./State";
 import User from "./User";
+import Vehicle from "./Vehicle";
 
 const Observation = db.define('Observation', {
     id: {
@@ -10,7 +11,13 @@ const Observation = db.define('Observation', {
         autoIncrement: true
     },
     detail: DataTypes.STRING,
-    vehicleId: DataTypes.INTEGER,
+    vehicleId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: Vehicle,
+            key: 'id'
+        }
+    },
     idState: {
         type: DataTypes.INTEGER,
         references: {
@@ -35,7 +42,8 @@ const Observation = db.define('Observation', {
     }
 });
 
-Observation.belongsTo( User, { as: 'Creator', foreignKey: 'createdBy', onDelete: 'CASCADE' } );
-Observation.belongsTo( User, { as: 'Solver', foreignKey: 'solvedBy', onDelete: 'CASCADE' } );
+Observation.belongsTo( User, { as: 'creator', foreignKey: 'createdBy', onDelete: 'CASCADE' } );
+Observation.belongsTo( User, { as: 'solver', foreignKey: 'solvedBy', onDelete: 'CASCADE' } );
+Observation.belongsTo( Vehicle, { as: 'vehicle', foreignKey: 'vehicleId', onDelete: 'CASCADE' } );
 
 export default Observation;

@@ -28,3 +28,15 @@ export const createVehicle = async ( req: any, res: Response ) => {
         res.send( 500 ).json({ msg: "There was an error" });
     }
 }
+
+export const getVehicles = async ( req: any, res: Response ) => {
+    try {
+
+        const vehicles = await Vehicle.findAll();
+        return res.json({ vehicles });
+
+    } catch (error) {
+        console.log( error );
+        res.send( 500 ).json({ msg: "There was an error" });
+    }
+}
