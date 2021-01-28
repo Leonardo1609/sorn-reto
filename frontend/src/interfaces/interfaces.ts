@@ -13,3 +13,23 @@ export interface IAuthReducer {
         token: string
     }
 }
+
+export interface IUser {
+    id: string,
+    username: string
+}
+
+export interface IUserReducer {
+    type: string,
+    payload: {
+        users: IUser[],
+        user: IUser
+    }
+}
+
+export interface IUi {
+    type: string,
+    payload: {
+        showModal: boolean
+    }
+}

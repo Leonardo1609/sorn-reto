@@ -20,7 +20,7 @@ export const Register = () => {
     const { username, password } = formValues as IRegistValues;
 
     function registerSubmit () {
-        dispatch( startCreateAccount( username.toLowerCase(), password ));
+        dispatch( startCreateAccount( username, password ));
     }
 
     return (
@@ -64,12 +64,12 @@ export const Register = () => {
                 <Button 
                     type="submit" 
                     value="Registrarte"
-                    className="w-full bg-blue-400 text-white p-3 rounded font-bold uppercase mt-8 hover:bg-blue-500 transition"
+                    className="w-full bg-blue-400 text-white p-3 rounded font-bold uppercase mt-8 hover:bg-blue-500 transition duration-300"
                 />   
                 <Link 
                     to="/auth/login"
-                    className="text-center text-blue-500 w-full block mt-8 cursor-pointer transition
-                               hover:text-blue-600 hover:font-bold"
+                    className="text-center text-blue-500 w-full block mt-8 cursor-pointer transition duration-300
+                             hover:text-blue-600 hover:font-bold"
                 >¿Ya tienes una cuenta? Ingresa aquí</Link>
             </form>
         </div>

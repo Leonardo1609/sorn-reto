@@ -20,7 +20,7 @@ export const Login = () => {
     const { username, password } = formValues as ILoginvalues;
 
     function loginSubmit () {
-        dispatch( startLoginUser( username.toLowerCase(), password ) );
+        dispatch( startLoginUser( username, password ) );
     }
 
     return (
@@ -64,11 +64,11 @@ export const Login = () => {
                 <Button 
                     type="submit" 
                     value="Ingresar"
-                    className="w-full bg-blue-400 text-white p-3 rounded font-bold uppercase mt-8 hover:bg-blue-500 transition"
+                    className="w-full bg-blue-400 text-white p-3 rounded font-bold uppercase mt-8 hover:bg-blue-500 transition duration-300"
                 />   
                 <Link
                     to="/auth/create-account"
-                    className="text-center text-blue-500 w-full block mt-8 cursor-pointer transition
+                    className="text-center text-blue-500 w-full block mt-8 cursor-pointer transition duration-300
                                hover:text-blue-600 hover:font-bold"
                 >¿No tienes una cuenta? Regístrate</Link>
             </form>

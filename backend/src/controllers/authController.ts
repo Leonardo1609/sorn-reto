@@ -123,9 +123,9 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
         const salt = await bcrypt.genSalt( 10 );
         const hashedPass = await bcrypt.hashSync( password, salt );
 
-        const user = await User.create({ username, password: hashedPass });
+        const user: any = await User.create({ username, password: hashedPass });
 
-        res.json({ user });
+        res.json({ user: { username: user.username, id: user.id } });
 
     } catch (error) {
         console.log( error );

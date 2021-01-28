@@ -62,3 +62,7 @@ export const setUser = ( username: string ) => ({
     type: types.setUser,
     payload: username
 })
+
+export const closeSession = () => ({
+    type: types.signOut
+});
