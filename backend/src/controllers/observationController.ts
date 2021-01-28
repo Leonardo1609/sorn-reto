@@ -115,6 +115,10 @@ export const getObservations = async ( req: any, res: Response ) => {
             model: Vehicle,
             attributes: [ 'vin' ],
             as: 'vehicle'
+        }, {
+            model: State,
+            attributes: ['name'],
+            as: 'state'
         }] });
 
         res.json({ observations });

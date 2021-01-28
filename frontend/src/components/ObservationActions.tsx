@@ -1,0 +1,48 @@
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startDeleteObservation, startSolveObservation } from '../actions/observations'
+import { setShowObservationActions } from '../actions/ui'
+
+export const ObservationActions = () => {
+    const { user } = useSelector( ( state: any ) => state.auth )
+    const { activeObservation } = useSelector( ( state: any ) => state.observations )
+    const dispatch = useDispatch();
+
+    const solveObservation = ( idState: number ) => {
+        dispatch( setShowObservationActions( false ) );
+        dispatch( startSolveObservation( idState ));
+    }
+
+    const removeObservation = () => {
+        dispatch( setShowObservationActions( false ) );
+        dispatch( startDeleteObservation() );
+    }
+
+    return (
+        <ul className="w-28 absolute top-10 right-10 z-10 cursor-pointer">
+            {
+                // El creador puede editar y eliminar su observación, pero no puede aceptar y rechazar su propia observación, lo tiene que hacer otro usuario
+                user.username === activeObservation.creator 
+                ?
+                <>
+                    <li className="text-white py-2 font-bold bg-blue-500">Editar</li>
+                    <li 
+                        onClick={ removeObservation }
+                        className="text-white py-2 font-bold bg-red-500"
+                    >Eliminar</li>
+                </>
+                :
+                <>
+                    <li 
+                        onClick={ solveObservation.bind( this, 2 ) }
+                        className="text-white py-2 font-bold bg-green-700"
+                    >Aceptar</li>
+                    <li 
+                        onClick={ solveObservation.bind( this, 3 ) }
+                        className="text-white py-2 font-bold bg-yellow-400"
+                    >Rechazar</li>
+                </>
+            }
+        </ul>
+    )
+}

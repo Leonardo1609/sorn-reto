@@ -25,8 +25,10 @@ export const AppRoute = () => {
     const isLoggedIn = useSelector( ( state: any ) => state.auth.authenticated );
 
     useEffect(() => {
-        dispatch( getUser() );
-    }, [])
+        if( token ){
+            dispatch( getUser() );
+        }
+    }, [ token ]);
 
     return (
         <Router>

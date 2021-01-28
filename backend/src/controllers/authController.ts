@@ -50,8 +50,8 @@ export const verifyUser = async ( req: any, res: Response ) => {
     const id = req.userId;
 
     try {
-        const user = await User.findByPk( id );
-        res.json({ user });
+        const user: any = await User.findByPk( id );
+        res.json({ user: { username: user.username, id: user.id, role: user.role  } });
     } catch (error) {
         console.log( error );
         res.status( 500 ).json({ msg: 'There was an error' });

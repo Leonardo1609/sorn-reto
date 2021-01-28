@@ -24,7 +24,7 @@ export const Register = () => {
     }
 
     return (
-        <div className="bg-blue-500 h-screen flex items-center">
+        <div className="bg-blue-500 h-100 flex items-center">
             <form 
                 className="md:w-1/2 bg-gray-200 mx-auto p-10"
                 onSubmit={ handleSubmit }

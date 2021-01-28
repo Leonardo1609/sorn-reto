@@ -45,5 +45,6 @@ const Observation = db.define('Observation', {
 Observation.belongsTo( User, { as: 'creator', foreignKey: 'createdBy', onDelete: 'CASCADE' } );
 Observation.belongsTo( User, { as: 'solver', foreignKey: 'solvedBy', onDelete: 'CASCADE' } );
 Observation.belongsTo( Vehicle, { as: 'vehicle', foreignKey: 'vehicleId', onDelete: 'CASCADE' } );
+Observation.belongsTo( State, { as: 'state', foreignKey: 'idState', onDelete: 'CASCADE' } );
 
 export default Observation;

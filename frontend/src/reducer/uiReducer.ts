@@ -2,7 +2,12 @@ import { IUi } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
 const initialState = {
-    showModal: false
+    showModal: {
+        bool: false,
+        component: null
+    },
+    showObservationActions: false
+
 }
 
 export default (state = initialState, { type, payload }: IUi) => {
@@ -12,6 +17,12 @@ export default (state = initialState, { type, payload }: IUi) => {
         return { 
             ...state, 
             showModal: payload.showModal
+        }
+    
+    case types.showObservationActions:
+        return {
+            ...state,
+            showObservationActions: payload.showObservationActions
         }
         
     default:

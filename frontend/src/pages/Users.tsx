@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setShowModal } from '../actions/ui';
 import { startGetUsers } from '../actions/users';
@@ -18,18 +18,18 @@ export const Users = () => {
     }, [ dispatch ])
 
     return (
-        <div className="w-full flex justify-center bg-gray-200 h-100 relative">
-            { showModal && <Modal 
-                component={ NewUserForm } 
+        <div className="w-full flex justify-center bg-gray-200 m-h-100 relative">
+            { showModal.bool && <Modal 
+                component={ showModal.component } 
             /> }
-            <div className="w-full p-4 md:w-2/4 mt-56 md:mt-36">
+            <div className="w-full p-4 md:w-2/4 mt-60 md:mt-36">
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-bold">Usuarios registrados</span>
                     <Button 
                         className="bg-blue-500 p-3 text-white font-bold uppercase rounded" 
                         type="button"
                         value="+ Nuevo"
-                        fn={ dispatch.bind( this, setShowModal( true ) ) }
+                        fn={ dispatch.bind( this, setShowModal( true, NewUserForm ) ) }
                     />
                 </div>
                 <table className="table-auto w-full border border-blue-500 border-separate mt-10">

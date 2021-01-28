@@ -1,6 +1,5 @@
 import { DataTypes } from "sequelize";
 import { db } from "../config/db";
-import Observation from "./Observation";
 
 const Vehicle = db.define('Vehicle', {
     id: {

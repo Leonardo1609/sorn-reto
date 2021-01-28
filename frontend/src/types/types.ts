@@ -8,5 +8,17 @@ export const types = {
     setUsers : '[Users] Set Users',
     addUser  : '[Users] Add User',
 
-    showModal : '[UI] Show Modal'
+    setVehicles    : '[Vehicles] Set Vehicles',
+    addVehicle     : '[Vehicles] Add Vehicle',
+    activeVehicle  : '[Vehicles] Active Vehicle',
+
+    setObservations        : '[Observations] Set Observations',
+    addObservation         : '[Observations] Add Observation',
+    activeObservation      : '[Observations] Active Observation',
+    updateStateObservation : '[Observations] Update State Observation',
+    deleteObservation      : '[Observations] Delete Observation',
+
+    showModal             : '[UI] Show Modal',
+    showObservationActions: '[UI] Show Observation Actions'
+
 }

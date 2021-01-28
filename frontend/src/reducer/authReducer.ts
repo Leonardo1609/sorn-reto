@@ -2,7 +2,7 @@ import { IAuthReducer } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
 const initialState = {
-    username: '',
+    user: '',
     authenticated: false
 }
 
@@ -19,14 +19,15 @@ export default (state = initialState, { type, payload }: IAuthReducer) => {
         case types.setUser:
             return {
                 ...state,
-                username: payload.username,
+                user: payload.user,
                 authenticated: true
             }
         case types.signOut:
             localStorage.removeItem('token');
             return {
-                username: '',
-                authenticated: false
+                user: null,
+                authenticated: false,
+                token: ''
             }
         default:
             return state

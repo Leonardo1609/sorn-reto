@@ -21,7 +21,7 @@ export const NewUserForm = () => {
 
     function registerSubmit () {
         dispatch( startCreateUser( username, password ) ); 
-        dispatch( setShowModal( false ) );
+        dispatch( setShowModal( false, null ) );
         reset( initialValues );
     }
     
@@ -33,7 +33,7 @@ export const NewUserForm = () => {
         >
             <div className="mb-5">
                 <span 
-                    onClick={ dispatch.bind( this, setShowModal( false ) ) } 
+                    onClick={ dispatch.bind( this, setShowModal( false, null ) ) } 
                     className="float-right text-xl cursor-pointer font-bold text-gray-700"
                 >x</span>
             </div>

@@ -1,19 +1,20 @@
 import { Dispatch } from "redux";
 import { clientAxios } from "../config/clientAxios";
 import { tokenAuth } from "../config/tokenAuth";
+import { IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
 
 export const getUser = () => {
     return async ( dispatch: Dispatch ) => {
-        const token = localStorage.getItem('token');
-
-        if ( token ) {
-            tokenAuth( token );
-        }
-
         try {
+            const token = localStorage.getItem('token');
+
+            if ( token ) {
+                tokenAuth( token );
+            }
+
             const { data } = await clientAxios.get('/auth');
-            dispatch( setUser( data.user.username ) );
+            dispatch( setUser( data.user ) );
         } catch (error) {
             console.log( error.response );
         }
@@ -38,9 +39,10 @@ export const startLoginUser = ( username: string, password: string ) => {
     return async ( dispatch: Dispatch ) => {
         try {
             const { data } = await clientAxios.post('/auth/signin', { username, password });
+
             dispatch( loginUser( data ) );
 
-            getUser();
+            await getUser();
 
         } catch (error) {
             console.log( error.response );
@@ -58,9 +60,9 @@ export const loginUser = ( token: string ) => ({
     payload: token
 })
 
-export const setUser = ( username: string ) => ({
+export const setUser = ( user: IUser ) => ({
     type: types.setUser,
-    payload: username
+    payload: { user }
 })
 
 export const closeSession = () => ({

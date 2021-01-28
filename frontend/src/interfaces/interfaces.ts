@@ -1,3 +1,5 @@
+import { ElementType } from "react";
+
 export interface ILoginvalues {
     username: string,
     password: string
@@ -8,7 +10,7 @@ export interface IRegistValues extends ILoginvalues {}
 export interface IAuthReducer {
     type: string,
     payload: {
-        username: string,
+        user: IUser,
         authenticated: boolean,
         token: string
     }
@@ -16,10 +18,11 @@ export interface IAuthReducer {
 
 export interface IUser {
     id: string,
-    username: string
+    username: string,
+    role: string | null
 }
 
-export interface IUserReducer {
+export interface IUserAction {
     type: string,
     payload: {
         users: IUser[],
@@ -27,9 +30,54 @@ export interface IUserReducer {
     }
 }
 
+export interface IVehicle {
+    id: string,
+    vin: string
+}
+export interface IVehicleAction {
+    type: string,
+    payload: {
+        vehicles: IVehicle[],
+        vehicle: IVehicle
+    }
+}
+
+export interface IVehicleValues {
+    vin: string
+}
+
+export interface IObservationValues {
+    detail: string
+}
+
+export interface IObservation extends IObservationValues {
+    id: number,
+    vin: string,
+    state: string,
+    creator: string,
+    solver: string | null
+}
+
+export interface IObservationAction {
+    type: string,
+    payload: {
+        observations: IObservation[],
+        observation: IObservation,
+        observationToSolve: {
+            id: number,
+            state: string,
+            solver: string
+        },
+        idToDelete: number
+    }
+}
 export interface IUi {
     type: string,
     payload: {
-        showModal: boolean
+        showModal: {
+            bool: boolean,
+            component: ElementType | null
+        },
+        showObservationActions: boolean
     }
 }

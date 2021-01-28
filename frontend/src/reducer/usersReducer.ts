@@ -1,11 +1,11 @@
-import { IUserReducer } from "../interfaces/interfaces"
+import { IUserAction } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
 const initialState = {
     users: [] 
 }
 
-export default (state = initialState, { type, payload }: IUserReducer) => {
+export default (state = initialState, { type, payload }: IUserAction ) => {
     switch (type) {
 
     case types.setUsers:
