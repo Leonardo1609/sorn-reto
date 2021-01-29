@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 import { startGetObservationsStatesPerUser } from '../actions/observations';
+import { startGetUsers } from '../actions/users';
 import { ObservationPerUsers } from '../components/ObservationPerUsers'
 
 export const Home = () => {
     const dispatch = useDispatch();
 
     useEffect( () => {
+        dispatch( startGetUsers() );
         dispatch( startGetObservationsStatesPerUser() );
     }, [ dispatch ]);
 
@@ -17,7 +19,6 @@ export const Home = () => {
                     <ObservationPerUsers /> 
                 </div>
                 <div className="flex-1">
-                    <ObservationPerUsers /> 
                 </div>
             </div>
         </div>

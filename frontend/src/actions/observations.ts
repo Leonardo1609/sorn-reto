@@ -1,8 +1,9 @@
 import { Dispatch } from "redux"
 import { clientAxios } from "../config/clientAxios"
-import { IObservation } from "../interfaces/interfaces";
+import { IObservation, IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
 import Swal from "sweetalert2";
+import { startGetUsers } from "./users";
 
 export const startGetObservations = () => {
     return async ( dispatch: Dispatch ) => {
@@ -151,14 +152,20 @@ export const updateStateObservation = ( id: number, idState: number, solver: str
 });
 
 export const startGetObservationsStatesPerUser = () => {
-    return async ( dispatch: Dispatch ) => {
+    return async ( dispatch: Dispatch, getState: any ) => {
         try {
             const { data } = await clientAxios.get('/observation/observation-per-user');
-            let observationsPerUser = [];
-            data.observations.map( ( info: any ) => {
-                // TODO
-            } )
-            dispatch( setObservationsStatesPerUser( data.observations ) );
+            const { users } = getState().users;
+            const observationsPerUser = users.map( ( user: IUser ) => (
+                {
+                    username: user.username,
+                    registers: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 1 )?.observationQuantity || 0,
+                    accepted: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 2 )?.observationQuantity || 0 ,
+                    rejected: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 3 )?.observationQuantity || 0 
+                }
+             ) );
+
+            dispatch( setObservationsStatesPerUser( observationsPerUser ) );
         } catch (error) {
             console.log( error );
         }  
