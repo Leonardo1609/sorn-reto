@@ -17,7 +17,7 @@ export interface IAuthReducer {
 }
 
 export interface IUser {
-    id: string,
+    id: number,
     username: string,
     role: string | null
 }
@@ -73,7 +73,11 @@ export interface IObservationAction {
         observationToModify: {
             id: number,
             detail: string
-        }
+        },
+        quantityObservationPerState: {
+            idState: number,
+            count: number
+        }[]
     }
 }
 export interface IUi {

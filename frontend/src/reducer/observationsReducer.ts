@@ -5,7 +5,8 @@ const initialState = {
     observations: [],
     activeObservation: null,
     wantEditDetail: false,
-    observationsStatesPerUser: []
+    observationsStatesPerUser: [],
+    quantityObservationsPerState: []
 }
 
 export default (state = initialState, { type, payload }: IObservationAction) => {
@@ -56,10 +57,15 @@ export default (state = initialState, { type, payload }: IObservationAction) => 
                     }
                 })
             }
-        case types.setObservationsStatesPerUser:
+        case types.observationsStatesPerUser:
             return {
                 ...state,
-                observationsStatePerUser: payload
+                observationsStatesPerUser: payload
+            }
+        case types.qObservationsPerState:
+            return {
+                ...state,
+                quantityObservationsPerState: payload.quantityObservationPerState
             }
         case types.deleteObservation:
             return {

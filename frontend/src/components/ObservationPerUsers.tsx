@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux"
 
 export const ObservationPerUsers = () => {
-    const { observationsStatePerUser } = useSelector( ( state: any ) => state.observations );
+    const { observationsStatesPerUser } = useSelector( ( state: any ) => state.observations );
     return (
         <>
             <h2 className="text-xl font-bold">Observaciones por empleado</h2>
-            <table className="table-auto w-full border border-blue-500 border-separate mt-10">
+            <table className="text-sm md:text-base table-auto w-full border border-blue-500 border-separate mt-10">
                 <thead>
                     <tr>
                         <th className="text-center">Empleado</th>
@@ -15,7 +15,7 @@ export const ObservationPerUsers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    { observationsStatePerUser && observationsStatePerUser.map( ( item: any ) => (
+                    { observationsStatesPerUser && observationsStatesPerUser.map( ( item: any ) => (
                         <tr key={ item.username }>
                             <td className="text-center border-t border-blue-500">{ item.username }</td>
                             <td className="text-center border-t border-blue-500">{ item.registers }</td>

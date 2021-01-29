@@ -40,15 +40,15 @@ export const Observations = () => {
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-bold">Observaciones registradas</span>
                 </div>
-                <table className="table-auto w-full border border-blue-500 border-separate mt-10">
+                <table className="table-auto w-full border border-blue-500 border-separate mt-10 text-sm sm:text-base">
                     <thead>
                         <tr>
                             <th className="text-center">ID</th>
                             <th className="text-center">Descripcion</th>
                             <th className="text-center">VIN</th>
-                            <th className="text-center">Estado</th>
-                            <th className="text-center">Registrado por</th>
-                            <th className="text-center">Actualizado por</th>
+                            <th className="text-center hidden sm:table-cell">Estado</th>
+                            <th className="text-center hidden sm:table-cell">Registrado por</th>
+                            <th className="text-center hidden sm:table-cell">Actualizado por</th>
                             <th className="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -60,9 +60,9 @@ export const Observations = () => {
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.id }</td>
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.detail }</td>
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.vin }</td>
-                                <td className="text-center py-3 border-t border-blue-500">{ observation.state }</td>
-                                <td className="text-center py-3 border-t border-blue-500">{ observation.creator }</td>
-                                <td className="text-center py-3 border-t border-blue-500">{ observation.solver }</td>
+                                <td className="text-center py-3 border-t border-blue-500 hidden sm:table-cell">{ observation.state }</td>
+                                <td className="text-center py-3 border-t border-blue-500 hidden sm:table-cell">{ observation.creator }</td>
+                                <td className="text-center py-3 border-t border-blue-500 hidden sm:table-cell">{ observation.solver }</td>
                                 <td className="text-center py-3 border-t border-blue-500 relative">
                                     <FontAwesomeIcon 
                                         className="cursor-pointer"

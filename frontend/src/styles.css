@@ -3,6 +3,9 @@
 html, body, #root, #root>div{
     font-family: 'Raleway', sans-serif;
     height: 100%;
+}
+
+html, body, #root {
     background-color: rgba(229, 231, 235, 1);
 }
 

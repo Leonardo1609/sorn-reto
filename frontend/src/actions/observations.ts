@@ -3,14 +3,14 @@ import { clientAxios } from "../config/clientAxios"
 import { IObservation, IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
 import Swal from "sweetalert2";
-import { startGetUsers } from "./users";
 
 export const startGetObservations = () => {
     return async ( dispatch: Dispatch ) => {
         try {
             const { data } = await clientAxios.get('/observation/all');
             const observations: IObservation[] = []
-            data.observations.map( ( observation: any ) => {
+            
+            data.observations.forEach( ( observation: any ) => {
                 const item: IObservation = {
                     id: observation.id,
                     creator: observation.creator.username,
@@ -19,7 +19,6 @@ export const startGetObservations = () => {
                     solver: observation.solver?.username || null,
                     vin: observation.vehicle.vin
                 }
-
                 observations.push( item );
             })
             dispatch( setObservations( observations ) );
@@ -156,19 +155,36 @@ export const startGetObservationsStatesPerUser = () => {
         try {
             const { data } = await clientAxios.get('/observation/observation-per-user');
             const { users } = getState().users;
-            const observationsPerUser = users.map( ( user: IUser ) => (
-                {
+
+            // console.log( data );
+
+            const quantityPerState = ( data: any[], idState: number, userId: number ) => (
+                data.find( ( item: any ) => item.createdBy === userId && item.idState === idState )?.observationQuantity || 0
+            ) 
+
+            const observationsPerUser = users.map( ( user: IUser ) => ({
                     username: user.username,
-                    registers: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 1 )?.observationQuantity || 0,
-                    accepted: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 2 )?.observationQuantity || 0 ,
-                    rejected: data.observations.find( ( item: any ) => item.createdBy === user.id && item.idState === 3 )?.observationQuantity || 0 
-                }
-             ) );
+                    registers: quantityPerState( data.observations, 1, user.id ),
+                    accepted: quantityPerState( data.observations, 2, user.id ),
+                    rejected: quantityPerState( data.observations, 3, user.id ),
+            }) );
 
             dispatch( setObservationsStatesPerUser( observationsPerUser ) );
+
         } catch (error) {
             console.log( error );
         }  
+    }
+}
+
+export const startGetQuantityObservationPerState = () => {
+    return async( dispatch: Dispatch ) => {
+        try {
+            const { data } = await clientAxios.get('/observation/observation-states');
+            dispatch( setQObservationPerState( data.quantityPerState ) );
+        } catch (error) {
+            console.log( error.response );
+        }
     }
 }
 
@@ -188,6 +204,12 @@ export const modifyObservationDetail = ( id: number, detail: string ) => ({
 });
 
 export const setObservationsStatesPerUser = ( observationsQuantity: [] ) => ({
-    type: types.setObservationsStatesPerUser,
+    type: types.observationsStatesPerUser,
     payload: observationsQuantity 
+})
+
+export const setQObservationPerState = ( observationsPerState: [] ) => ({
+    type: types.qObservationsPerState,
+    payload: { quantityObservationPerState: observationsPerState }
+    
 })

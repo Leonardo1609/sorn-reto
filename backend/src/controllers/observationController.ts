@@ -133,7 +133,7 @@ export const getCountObservationPerState = async ( req: any, res: Response ) => 
     try {
         const { count }: any = await Observation.findAndCountAll({ 
             attributes: [ 'idState' ], 
-            group: ['idState']
+            group: [ 'idState' ]
         });
 
         res.json({ quantityPerState: count });
