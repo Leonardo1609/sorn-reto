@@ -11,3 +11,9 @@ export const setShowObservationActions = ( bool: boolean ) => ({
     payload: { showObservationActions: bool } 
 })
 
+export const setLoadingUser = ( bool: boolean ) => ({
+    type: types.loadingUser,
+    payload: { loadingUser: bool }
+})
+
+

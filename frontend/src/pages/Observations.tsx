@@ -11,12 +11,12 @@ import { IObservation } from '../interfaces/interfaces';
 export const Observations = () => {
 
 
-    const dispatch = useDispatch(),
-          { observations } = useSelector( ( state: any ) => state.observations ),
-          { activeObservation } = useSelector( ( state: any ) => state.observations ),
-          { showModal } = useSelector( ( state: any ) => state.ui ),
-          { showObservationActions } = useSelector( ( state: any ) => state.ui ),
-          { user } = useSelector( ( state: any ) => state.auth );
+    const dispatch = useDispatch();
+    const observations = useSelector( ( state: any ) => state.observations.observations );
+    const activeObservation = useSelector( ( state: any ) => state.observations.activeObservation );
+    const showModal = useSelector( ( state: any ) => state.ui.showModal );
+    const showObservationActions = useSelector( ( state: any ) => state.ui.showObservationActions );
+    const user = useSelector( ( state: any ) => state.auth.user );
 
     useEffect( () => {
         dispatch( startGetObservations() );

@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setWantEditDetail } from '../actions/observations';
 import { setShowModal } from '../actions/ui';
 import { setActiveVehicle, startGetVehicles } from '../actions/vehicles';
 import { Button } from '../components/Button';
@@ -12,8 +11,8 @@ import { IVehicle } from '../interfaces/interfaces';
 export const Vehicles = () => {
 
     const dispatch = useDispatch();
-    const { vehicles } = useSelector( ( state: any ) => state.vehicles );
-    const { showModal } = useSelector( ( state: any ) => state.ui );
+    const vehicles = useSelector( ( state: any ) => state.vehicles.vehicles );
+    const showModal = useSelector( ( state: any ) => state.ui.showModal );
 
     useEffect( () => {
         dispatch( startGetVehicles() );

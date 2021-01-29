@@ -23,6 +23,7 @@ export const types = {
     qObservationsPerState     : '[Observations] Quantity Observations Per State',
 
     showModal              : '[UI] Show Modal',
-    showObservationActions : '[UI] Show Observation Actions'
+    showObservationActions : '[UI] Show Observation Actions',
+    loadingUser            : '[UI] Loading User'
 
 }

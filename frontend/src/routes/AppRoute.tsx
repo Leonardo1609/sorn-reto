@@ -11,6 +11,7 @@ import { PublicRoute } from './PublicRoute';
 import { getUser } from '../actions/auth';
 import { useEffect } from 'react';
 import { Header } from '../components/Header';
+import { Loading } from '../components/Loading';
 
 export const AppRoute = () => {
 
@@ -23,12 +24,15 @@ export const AppRoute = () => {
     const dispatch = useDispatch();
 
     const isLoggedIn = useSelector( ( state: any ) => state.auth.authenticated );
+    const loadingUser = useSelector( ( state: any ) => state.ui.loadingUser );
 
     useEffect(() => {
         if( token ){
             dispatch( getUser() );
         }
-    }, [ token ]);
+    }, [ token, dispatch ]);
+
+    if( loadingUser ) return <Loading />
 
     return (
         <Router>

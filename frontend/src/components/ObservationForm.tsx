@@ -12,9 +12,9 @@ export const ObservationForm = () => {
         detail: '',
     }
 
-    const dispatch = useDispatch(),
-          { wantEditDetail } = useSelector( ( state: any ) => state.observations );
-    const { activeObservation } = useSelector( ( state: any ) => state.observations );
+    const dispatch = useDispatch();
+    const wantEditDetail = useSelector( ( state: any ) => state.observations.wantEditDetail );
+    const activeObservation = useSelector( ( state: any ) => state.observations.activeObservation );
 
     const valuesToForm = wantEditDetail ? { detail: activeObservation.detail } : initialValues;
 

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 
 export const ObservationPerUsers = () => {
-    const { observationsStatesPerUser } = useSelector( ( state: any ) => state.observations );
+    const observationsStatesPerUser = useSelector( ( state: any ) => state.observations.observationsStatesPerUser );
     return (
         <>
             <h2 className="text-xl font-bold">Observaciones por empleado</h2>

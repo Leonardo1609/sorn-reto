@@ -6,7 +6,8 @@ const initialState = {
         bool: false,
         component: null
     },
-    showObservationActions: false
+    showObservationActions: false,
+    loadingUser: false
 
 }
 
@@ -23,6 +24,11 @@ export default (state = initialState, { type, payload }: IUi) => {
         return {
             ...state,
             showObservationActions: payload.showObservationActions
+        }
+    case types.loadingUser:
+        return{
+            ...state,
+            loadingUser: payload.loadingUser
         }
         
     default:

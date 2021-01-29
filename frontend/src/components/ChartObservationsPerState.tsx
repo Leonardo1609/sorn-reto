@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export const ChartObservationsPerState = () => {
 
-    const { quantityObservationsPerState } = useSelector( ( state: any ) => state.observations );
+    const quantityObservationsPerState = useSelector( ( state: any ) => state.observations.quantityObservationsPerState );
 
     const getQuantity = ( idState: number ) => ( 
         quantityObservationsPerState.find( ( item: { idState: number, count: number } ) => item.idState === idState  )?.count || 0

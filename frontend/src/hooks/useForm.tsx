@@ -11,6 +11,7 @@ export const useForm = ( initialValues = {}, fnValidation: Function, fnSubmit: F
         if( Object.keys( errors ).length === 0 && submit ){
             fnSubmit();
         }
+        // eslint-disable-next-line
     }, [ errors, submit ])
 
     const reset = ( newFormValues = {} ) => {

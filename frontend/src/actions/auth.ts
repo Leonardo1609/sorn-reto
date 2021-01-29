@@ -3,11 +3,13 @@ import { clientAxios } from "../config/clientAxios";
 import { tokenAuth } from "../config/tokenAuth";
 import { IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
+import { setLoadingUser } from "./ui";
 import Swal from 'sweetalert2';
 
-export const getUser = () => {
+export const getUser = (): any => {
     return async ( dispatch: Dispatch ) => {
         try {
+            dispatch( setLoadingUser( true ) );
             const token = localStorage.getItem('token');
 
             if ( token ) {
@@ -16,6 +18,7 @@ export const getUser = () => {
 
             const { data } = await clientAxios.get('/auth');
             dispatch( setUser( data.user ) );
+            dispatch( setLoadingUser( false ) );
         } catch (error) {
             console.log( error.response );
         }

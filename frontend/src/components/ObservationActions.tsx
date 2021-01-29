@@ -4,8 +4,8 @@ import { setShowModal, setShowObservationActions } from '../actions/ui'
 import { ObservationForm } from './ObservationForm'
 
 export const ObservationActions = () => {
-    const { user } = useSelector( ( state: any ) => state.auth )
-    const { activeObservation } = useSelector( ( state: any ) => state.observations )
+    const user = useSelector( ( state: any ) => state.auth.user )
+    const activeObservation = useSelector( ( state: any ) => state.observations.activeObservation )
     const dispatch = useDispatch();
 
     const solveObservation = ( idState: number ) => {

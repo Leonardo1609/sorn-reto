@@ -97,10 +97,10 @@ export const startModifyObservationDetail = ( detail: string ) => {
 }
 
 export const startDeleteObservation = () => {
-    return async ( dispatch: Dispatch, getState: any ) => {
+    return ( dispatch: Dispatch, getState: any ) => {
         try {
+
             const { id: observationId } = getState().observations.activeObservation;
-            await clientAxios.delete(`/observation/${ observationId }`);
 
             Swal.fire({
               title: '¿Estás seguro?',
@@ -110,8 +110,9 @@ export const startDeleteObservation = () => {
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Sí, eliminar'
-            }).then((result) => {
+            }).then( async (result) => {
               if (result.isConfirmed) {
+                await clientAxios.delete(`/observation/${ observationId }`);
                 dispatch( deleteObservation( observationId ) );
                 Swal.fire(
                   'Observación eliminada',

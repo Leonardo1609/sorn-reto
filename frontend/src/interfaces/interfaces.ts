@@ -87,6 +87,7 @@ export interface IUi {
             bool: boolean,
             component: ElementType | null
         },
-        showObservationActions: boolean
-    }
+        showObservationActions: boolean,
+        loadingUser: boolean
+    },
 }

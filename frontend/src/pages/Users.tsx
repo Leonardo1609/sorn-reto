@@ -12,8 +12,8 @@ export const Users = () => {
 
     const dispatch = useDispatch();
     const { role } = useSelector( ( state: any ) => state.auth.user );
-    const { users } = useSelector( ( state: any ) => state.users );
-    const { showModal } = useSelector( ( state: any ) => state.ui );
+    const users = useSelector( ( state: any ) => state.users.users );
+    const showModal = useSelector( ( state: any ) => state.ui.showModal );
 
     useEffect( () => {
         dispatch( startGetUsers() );

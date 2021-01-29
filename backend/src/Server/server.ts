@@ -9,6 +9,10 @@ import '../model/Vehicle';
 import '../model/State';
 import '../model/Observation';
 
+// seeders
+import adminSeeder from '../seeders/admin.seeder';
+import statesSeeder from '../seeders/states.seeder';
+
 import authRouter from '../routes/auth';
 import vehicleRouter from '../routes/vehicle';
 import observationRouter from '../routes/observation';
@@ -35,11 +39,17 @@ class Server {
         })();
     }
 
+    seeders(){
+        adminSeeder();
+        statesSeeder();
+    }
+
     middlewares(){
         this.app.use( cors() )
         this.app.use( morgan('dev') );
         this.app.use( express.json());
         this.app.use( express.urlencoded({ extended: false }));
+
 
         // routes
         this.app.use( '/api/auth', authRouter() );
@@ -50,6 +60,7 @@ class Server {
     execute(){
         this.middlewares();
         this.connection();
+        this.seeders();
         this.app.listen( this.port, () => {
             console.log(`Connected to port: ${ this.port }`);
         })
