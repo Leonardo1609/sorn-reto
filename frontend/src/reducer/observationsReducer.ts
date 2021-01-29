@@ -3,7 +3,9 @@ import { types } from "../types/types"
 
 const initialState = {
     observations: [],
-    activeObservation: null
+    activeObservation: null,
+    wantEditDetail: false,
+    observationsStatesPerUser: []
 }
 
 export default (state = initialState, { type, payload }: IObservationAction) => {
@@ -36,6 +38,28 @@ export default (state = initialState, { type, payload }: IObservationAction) => 
                         return observation;
                     }
                 })
+            }
+        case types.wantEditDetail:
+            return{
+                ...state,
+                wantEditDetail: payload.wantEditDetail
+            }
+        case types.modifyObservationDetail:
+            return {
+                ...state,
+                observations: state.observations.map( ( observation: IObservation ) => {
+                    if( observation.id === payload.observationToModify.id ){
+                        observation.detail = payload.observationToModify.detail;
+                        return observation;
+                    } else {
+                        return observation;
+                    }
+                })
+            }
+        case types.setObservationsStatesPerUser:
+            return {
+                ...state,
+                observationsStatePerUser: payload
             }
         case types.deleteObservation:
             return {

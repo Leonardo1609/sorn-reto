@@ -7,7 +7,7 @@ import { IVehicleValues } from "../interfaces/interfaces";
 import { createVehicleValidation } from "../validations/createVehicleValidation";
 import { Button } from "./Button";
 
-export const NewVehicleForm = () => {
+export const VehicleForm = () => {
     const initialValues: IVehicleValues = {
         vin: '',
     }

@@ -1,6 +1,6 @@
 import React from "react"
 import { useDispatch } from "react-redux"
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 import { closeSession } from "../actions/auth"
 import { Button } from "./Button"
 
@@ -12,9 +12,9 @@ export const Header = () => {
             <h1 className="text-2xl sm:text-3xl text-white font-bold text-center"><Link to="/">Página Principal</Link></h1>
             <nav className="flex items-center">
                 <ul className="flex sm:space-x-10 flex-col items-center sm:flex-row text-white font-bold ">
-                    <li className="hover:text-gray-200"><Link to="/users">Usuarios</Link></li>
-                    <li className="hover:text-gray-200"><Link to="/vehicles">Vehículos</Link></li>
-                    <li className="hover:text-gray-200"><Link to="/observations">Observaciones</Link></li>
+                    <li className="hover:text-gray-200"><NavLink to="/users" activeClassName="border-b-2 border-white">Usuarios</NavLink></li>
+                    <li className="hover:text-gray-200"><NavLink to="/vehicles" activeClassName="border-b-2 border-white">Vehículos</NavLink></li>
+                    <li className="hover:text-gray-200"><NavLink to="/observations" activeClassName="border-b-2 border-white">Observaciones</NavLink></li>
                 </ul>
             </nav>
             <Button

@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { setWantEditDetail } from '../actions/observations';
 import { setShowModal } from '../actions/ui';
 import { setActiveVehicle, startGetVehicles } from '../actions/vehicles';
 import { Button } from '../components/Button';
 import { Modal } from '../components/Modal';
-import { NewObservationForm } from '../components/NewObservationForm';
-import { NewVehicleForm } from '../components/NewVehicleForm';
+import { ObservationForm } from '../components/ObservationForm';
+import { VehicleForm } from '../components/VehicleForm';
 import { IVehicle } from '../interfaces/interfaces';
 
 export const Vehicles = () => {
-
 
     const dispatch = useDispatch();
     const { vehicles } = useSelector( ( state: any ) => state.vehicles );
@@ -20,8 +20,9 @@ export const Vehicles = () => {
     }, [ dispatch ])
 
     const openObservationModal = ( vehicle: IVehicle ) => {
+        
         dispatch( setActiveVehicle( vehicle ) )
-        dispatch( setShowModal( true, NewObservationForm ) );
+        dispatch( setShowModal( true, ObservationForm ) );
     }
 
     return (
@@ -36,7 +37,7 @@ export const Vehicles = () => {
                         className="bg-blue-500 p-3 text-white font-bold uppercase rounded" 
                         type="button"
                         value="+ Nuevo"
-                        fn={ dispatch.bind( this, setShowModal( true, NewVehicleForm ) ) }
+                        fn={ dispatch.bind( this, setShowModal( true, VehicleForm ) ) }
                     />
                 </div>
                 <table className="table-auto w-full border border-blue-500 border-separate mt-10">

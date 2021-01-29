@@ -7,7 +7,7 @@ import { IRegistValues } from '../interfaces/interfaces';
 import { registerValidation } from '../validations/registerValidation';
 import { Button } from './Button'
 
-export const NewUserForm = () => {
+export const UserForm = () => {
     const initialValues: IRegistValues = {
         username: '',
         password: ''

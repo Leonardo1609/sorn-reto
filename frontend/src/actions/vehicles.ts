@@ -2,6 +2,7 @@ import { Dispatch } from "redux"
 import { clientAxios } from "../config/clientAxios"
 import { IVehicle } from "../interfaces/interfaces";
 import { types } from "../types/types";
+import Swal from "sweetalert2";
 
 export const startGetVehicles = () => {
     return async ( dispatch: Dispatch ) => {
@@ -9,7 +10,7 @@ export const startGetVehicles = () => {
             const { data } = await clientAxios.get('/vehicle/all');
             dispatch( setVehicles( data.vehicles ) );
         } catch ( error ) {
-            console.log( error.response )
+            console.log( error.response );
         }
     }
 }
@@ -19,8 +20,17 @@ export const startCreateVehicle = ( vin: string ) => {
         try {
             const { data } = await clientAxios.post('/vehicle', { vin });
             dispatch( addVehicle( data.vehicle ) );
+            Swal.fire(
+              'Vehículo agregado',
+              'El vehículo se agregó con éxito',
+              'success'
+            )
         } catch ( error ) {
-            console.log( error.response );
+            Swal.fire(
+              'Error',
+              error.response.data.msg,
+              'error'
+            )
         }
     }
 }

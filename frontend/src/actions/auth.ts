@@ -3,6 +3,7 @@ import { clientAxios } from "../config/clientAxios";
 import { tokenAuth } from "../config/tokenAuth";
 import { IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
+import Swal from 'sweetalert2';
 
 export const getUser = () => {
     return async ( dispatch: Dispatch ) => {
@@ -31,6 +32,11 @@ export const startCreateAccount = ( username: string, password: string ) => {
 
         } catch (error) {
             console.log( error.response );
+            Swal.fire(
+                'Error',
+                error.response.data.msg,
+                'error'
+            ) 
         }
     }
 }
@@ -46,6 +52,11 @@ export const startLoginUser = ( username: string, password: string ) => {
 
         } catch (error) {
             console.log( error.response );
+            Swal.fire(
+                'Error',
+                error.response.data.msg,
+                'error'
+            ) 
         }
     }
 }

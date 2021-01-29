@@ -3,4 +3,9 @@
 html, body, #root, #root>div{
     font-family: 'Raleway', sans-serif;
     height: 100%;
+    background-color: rgba(229, 231, 235, 1);
+}
+
+.swal2-shown.swal2-height-auto{
+    height: 100vh !important;
 }

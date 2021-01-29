@@ -33,11 +33,11 @@ export const updateStateOfVehicle = async ( req: any, res: Response ) => {
         const stateExists = await State.findByPk( idState );
         const observation: any = await Observation.findByPk( observationId );
 
-        if( !observation ) return res.status( 404 ).json({ msg: "Observation not found" });
+        if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrda" });
 
-        if( observation.createdBy === userId ) return res.status( 403 ).json({ msg: "You can't change the state of your own observation" });
+        if( observation.createdBy === userId ) return res.status( 403 ).json({ msg: "No puedes modificar el estado de una observación propia" });
 
-        if( !stateExists ) return res.status( 400 ).json({ msg: "State not found" });
+        if( !stateExists ) return res.status( 400 ).json({ msg: "Estado no encontrado" });
 
         observation.idState = Number(idState);
         observation.solvedBy = userId;
@@ -62,11 +62,11 @@ export const updateObservation = async ( req: any, res: Response ) => {
         
         const observation: any = await Observation.findByPk( observationId );
 
-        if( !observation ) return res.status( 404 ).json({ msg: "Observation not found" });
+        if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrada" });
         
-        if( observation.createdBy !== userId ) return res.status( 403 ).json({ msg: "Unauthorized. You just can edit your own observations" });
+        if( observation.createdBy !== userId ) return res.status( 403 ).json({ msg: "No autorizado. Solo puedes modificar observaciones propias" });
 
-        if( observation.solvedBy ) return res.status( 400 ).json({ msg: "You can't modify already solved observations" });
+        if( observation.solvedBy ) return res.status( 400 ).json({ msg: "No puedes modificar una observación ya acutalizada" });
 
         observation.detail = detail;
 
@@ -76,7 +76,7 @@ export const updateObservation = async ( req: any, res: Response ) => {
 
     } catch (error) {
         console.log( error );
-        res.send( 500 ).json({ msg: "There was an error" });        
+        res.send( 500 ).json({ msg: "Hubo un error" });        
     }
 }
 
@@ -87,17 +87,17 @@ export const deleteObservation = async ( req: any, res: Response ) => {
 
         const observation: any = await Observation.findByPk( observationId );
 
-        if( !observation ) return res.status( 404 ).json({ msg: "Observation not found" });
+        if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrada" });
 
-        if( observation.createdBy !== userId ) return res.status( 403 ).json({ msg: "Unauthorized. You just can delete your own observations" });
+        if( observation.createdBy !== userId ) return res.status( 403 ).json({ msg: "No autorizado. Solo puedes eliminar tus propias observaciones" });
 
         await observation.destroy();
 
-        return res.json({ msg: "Observation was deleted" });
+        return res.json({ msg: "La observación fue eliminada" });
 
     } catch (error) {
         console.log( error );
-        res.send( 500 ).json({ msg: "There was an error" });        
+        res.send( 500 ).json({ msg: "Hubo un error" });        
     }
 }
 
@@ -125,7 +125,7 @@ export const getObservations = async ( req: any, res: Response ) => {
 
     } catch (error) {
         console.log( error );
-        res.send( 500 ).json({ msg: "There was an error" });        
+        res.send( 500 ).json({ msg: "Hubo un error" });        
     }
 }
 
@@ -140,7 +140,7 @@ export const getCountObservationPerState = async ( req: any, res: Response ) => 
         
     } catch (error) {
         console.log( error );
-        res.send( 500 ).json({ msg: "There was an error" });        
+        res.send( 500 ).json({ msg: "Hubo un error" });        
     }
 }
 
@@ -163,6 +163,6 @@ export const getQuantityObservationsPerUsersAndState = async ( req: any, res: Re
         
     } catch (error) {
         console.log( error );
-        res.send( 500 ).json({ msg: "There was an error" });        
+        res.send( 500 ).json({ msg: "Hubo un error" });        
     }
 }

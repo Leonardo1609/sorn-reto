@@ -4,16 +4,19 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setActiveObservation, startGetObservations } from '../actions/observations';
 import { setShowObservationActions } from '../actions/ui';
+import { Modal } from '../components/Modal';
 import { ObservationActions } from '../components/ObservationActions';
 import { IObservation } from '../interfaces/interfaces';
 
 export const Observations = () => {
 
 
-    const dispatch = useDispatch();
-    const { observations } = useSelector( ( state: any ) => state.observations );
-    const { activeObservation } = useSelector( ( state: any ) => state.observations );
-    const { showObservationActions } = useSelector( ( state: any ) => state.ui )
+    const dispatch = useDispatch(),
+          { observations } = useSelector( ( state: any ) => state.observations ),
+          { activeObservation } = useSelector( ( state: any ) => state.observations ),
+          { showModal } = useSelector( ( state: any ) => state.ui ),
+          { showObservationActions } = useSelector( ( state: any ) => state.ui ),
+          { user } = useSelector( ( state: any ) => state.auth );
 
     useEffect( () => {
         dispatch( startGetObservations() );
@@ -24,8 +27,15 @@ export const Observations = () => {
         dispatch( setShowObservationActions( !showObservationActions ) );
     }
 
+    const backgroundState = ( state: string ) => state === 'rechazado' ? 'bg-yellow-500' : state === 'aceptado' ? 'bg-green-500' : 'bg-blue-500' 
+
+    const creatorRow = ( username: string ) => username === user.username && 'font-bold';
+
     return (
-        <div className="w-full flex justify-center bg-gray-200 m-h-100 relative">
+        <div className="min-w-full flex justify-center bg-gray-200 m-h-100 relative">
+            { showModal.bool && <Modal 
+                component={ showModal.component }
+            /> }
             <div className="w-full p-4 md:w-3/4 mt-60 md:mt-36">
                 <div className="flex justify-between items-center">
                     <span className="text-xl font-bold">Observaciones registradas</span>
@@ -46,7 +56,7 @@ export const Observations = () => {
                         { observations.map( ( observation: IObservation ) => (
                             <tr 
                                 key={ observation.id } 
-                                className={ observation.state === 'rechazado' ? 'bg-yellow-200' : observation.state === 'aceptado' ? 'bg-green-200' : 'bg-blue-200' }>
+                                className={ `${ backgroundState( observation.state ) } ${ creatorRow( observation.creator )}` }>
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.id }</td>
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.detail }</td>
                                 <td className="text-center py-3 border-t border-blue-500">{ observation.vin }</td>

@@ -1,7 +1,7 @@
-import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { startDeleteObservation, startSolveObservation } from '../actions/observations'
-import { setShowObservationActions } from '../actions/ui'
+import { setWantEditDetail, startDeleteObservation, startSolveObservation } from '../actions/observations'
+import { setShowModal, setShowObservationActions } from '../actions/ui'
+import { ObservationForm } from './ObservationForm'
 
 export const ObservationActions = () => {
     const { user } = useSelector( ( state: any ) => state.auth )
@@ -18,6 +18,13 @@ export const ObservationActions = () => {
         dispatch( startDeleteObservation() );
     }
 
+    const showModalToModifyDetail = ( bool: boolean ) => {
+        dispatch( setWantEditDetail( bool ) );
+        dispatch( setShowObservationActions( false ));
+        dispatch( setShowModal( true, ObservationForm ));
+    }
+
+
     return (
         <ul className="w-28 absolute top-10 right-10 z-10 cursor-pointer">
             {
@@ -25,7 +32,10 @@ export const ObservationActions = () => {
                 user.username === activeObservation.creator 
                 ?
                 <>
-                    <li className="text-white py-2 font-bold bg-blue-500">Editar</li>
+                    <li 
+                        onClick={ showModalToModifyDetail.bind( this, true ) }   
+                        className="text-white py-2 font-bold bg-blue-500"
+                    >Editar</li>
                     <li 
                         onClick={ removeObservation }
                         className="text-white py-2 font-bold bg-red-500"

@@ -68,7 +68,12 @@ export interface IObservationAction {
             state: string,
             solver: string
         },
-        idToDelete: number
+        idToDelete: number,
+        wantEditDetail: boolean,
+        observationToModify: {
+            id: number,
+            detail: string
+        }
     }
 }
 export interface IUi {

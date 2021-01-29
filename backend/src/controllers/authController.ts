@@ -19,7 +19,7 @@ export const registUser = async ( req: Request, res: Response ) => {
         });
 
         if ( userExists ) {
-            res.status( 301 ).json({ msg: 'User already exists' });
+            res.status( 301 ).json({ msg: 'El usuario ya se encuentra en existencia' });
         }
     
         const salt = await bcrypt.genSalt( 10 );
@@ -40,7 +40,7 @@ export const registUser = async ( req: Request, res: Response ) => {
         
     } catch( error ) {
         console.log( error );
-        res.status(500).send({ msg: 'There was an error' });
+        res.status(500).send({ msg: 'Hubo un error' });
     }
 }
 
@@ -54,7 +54,7 @@ export const verifyUser = async ( req: any, res: Response ) => {
         res.json({ user: { username: user.username, id: user.id, role: user.role  } });
     } catch (error) {
         console.log( error );
-        res.status( 500 ).json({ msg: 'There was an error' });
+        res.status(500).send({ msg: 'Hubo un error' });
     }
 }
 
@@ -73,12 +73,12 @@ export const signInUser = async ( req: Request, res: Response ) => {
             }
         })
 
-        if( !user ) return res.status( 404 ).json({ msg: 'User not found' });
+        if( !user ) return res.status( 404 ).json({ msg: 'Credenciales inválidas' });
 
         const passVerified = await bcrypt.compareSync( password, user.get('password') );
 
 
-        if ( !passVerified ) return res.status( 401 ).json({ msg: 'Invalid Credentials' });
+        if ( !passVerified ) return res.status( 401 ).json({ msg: 'Credenciales inválidas' });
 
         const payload = {
             userId: user.get('id')
@@ -93,7 +93,7 @@ export const signInUser = async ( req: Request, res: Response ) => {
 
     } catch (error) {
         console.log( error );
-        res.status( 500 ).json({ msg: 'There was an error' });
+        res.status(500).send({ msg: 'Hubo un error' });
     }
 }
 
@@ -104,7 +104,7 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
 
     const user: any = await User.findByPk( id );
 
-    if( user.role !== 'admin' ) return res.status( 403 ).json({ msg: 'Unauthorized' })
+    if( user.role !== 'admin' ) return res.status( 403 ).json({ msg: 'No autorizado' })
 
     const errors = validationResult( req );
     if ( !errors.isEmpty() ) return res.status( 400 ).json({ errors: errors.array() });
@@ -118,7 +118,7 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
             }
         })
 
-        if ( userExists ) return res.status( 400 ).json({ msg: 'User already exists' });
+        if ( userExists ) return res.status( 400 ).json({ msg: 'El usuario ya se encuentra en existencia' });
         
         const salt = await bcrypt.genSalt( 10 );
         const hashedPass = await bcrypt.hashSync( password, salt );
@@ -129,7 +129,7 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
 
     } catch (error) {
         console.log( error );
-        res.status( 500 ).json({ msg: 'There was an error' });
+        res.status(500).send({ msg: 'Hubo un error' });
     }
 }
 
@@ -141,6 +141,6 @@ export const getUsers = async ( req: Request, res: Response ) => {
         res.json({ users });
     } catch (error) {
         console.log( error );
-        res.status( 500 ).json({ msg: 'There was an error' });
+        res.status(500).send({ msg: 'Hubo un error' });
     }
 }

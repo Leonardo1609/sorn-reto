@@ -1,27 +1,34 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { startCreateObservation } from "../actions/observations";
+import { useDispatch, useSelector } from "react-redux";
+import { setWantEditDetail, startCreateObservation, startModifyObservationDetail } from "../actions/observations";
 import { setShowModal } from "../actions/ui";
-import { startCreateVehicle } from "../actions/vehicles";
 import { useForm } from "../hooks/useForm";
 import { IObservationValues } from "../interfaces/interfaces";
 import { createObservationValidation } from "../validations/createObservationValidation";
 import { Button } from "./Button";
 
-export const NewObservationForm = () => {
+export const ObservationForm = () => {
     const initialValues: IObservationValues = {
         detail: '',
     }
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(),
+          { wantEditDetail } = useSelector( ( state: any ) => state.observations );
+    const { activeObservation } = useSelector( ( state: any ) => state.observations );
 
-    const { formValues, handleChange, handleSubmit, errors, reset } = useForm( initialValues, createObservationValidation, registerSubmit )
+    const valuesToForm = wantEditDetail ? { detail: activeObservation.detail } : initialValues;
 
-    const { detail } = formValues as IObservationValues;
+    const { formValues, handleChange, handleSubmit, errors, reset } = useForm( valuesToForm, createObservationValidation, registerSubmit ),
+          { detail } = formValues as IObservationValues;
 
     function registerSubmit () {
-        dispatch( startCreateObservation( detail ) );
+        if( !wantEditDetail ){
+            dispatch( startCreateObservation( detail ) );
+        } else {
+            dispatch( startModifyObservationDetail( detail ) );
+        }
         dispatch( setShowModal( false, null ) );
+        dispatch( setWantEditDetail( false ));
         reset( initialValues );
     }
 
@@ -37,7 +44,7 @@ export const NewObservationForm = () => {
                     className="float-right text-xl cursor-pointer font-bold text-gray-700"
                 >x</span>
             </div>
-            <h2 className="text-center text-2xl font-bold">Agregar Observación</h2>
+            <h2 className="text-center text-2xl font-bold">{ !wantEditDetail ? 'Agregar Observación' : 'Editar Observación' }</h2>
             <div className="mt-8">
                 <label 
                     className="block w-full mb-3"

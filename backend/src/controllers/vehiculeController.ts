@@ -12,7 +12,7 @@ export const createVehicle = async ( req: Request, res: Response ) => {
             }
         })
 
-        if( vehicleExists ) return res.status( 400 ).json({ msg: 'Vechicle already exists' });
+        if( vehicleExists ) return res.status( 400 ).json({ msg: 'El vehículo ya se encuentra en existencia' });
 
         const vehicle = await Vehicle.create({ vin });
 
