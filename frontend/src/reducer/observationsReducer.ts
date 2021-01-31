@@ -9,7 +9,7 @@ const initialState = {
     quantityObservationsPerState: []
 }
 
-export default (state = initialState, { type, payload }: IObservationAction) => {
+export const observationsReducer = (state = initialState, { type, payload }: IObservationAction) => {
     switch (type) {
 
         case types.setObservations:

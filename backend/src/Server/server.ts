@@ -33,6 +33,7 @@ class Server {
             try {
                 await this.db.sync();
                 console.log('Connected to mysql');
+                this.seeders();
             } catch (error) {
                 console.log( error ) ;
             }
@@ -60,7 +61,6 @@ class Server {
     execute(){
         this.middlewares();
         this.connection();
-        this.seeders();
         this.app.listen( this.port, () => {
             console.log(`Connected to port: ${ this.port }`);
         })

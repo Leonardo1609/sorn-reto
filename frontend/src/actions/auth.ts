@@ -21,6 +21,7 @@ export const getUser = (): any => {
             dispatch( setLoadingUser( false ) );
         } catch (error) {
             console.log( error.response );
+            dispatch( setLoadingUser( false ) );
         }
     }
 }

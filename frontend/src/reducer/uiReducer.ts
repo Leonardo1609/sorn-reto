@@ -11,7 +11,7 @@ const initialState = {
 
 }
 
-export default (state = initialState, { type, payload }: IUi) => {
+export const uiReducer = (state = initialState, { type, payload }: IUi) => {
     switch (type) {
 
     case types.showModal:

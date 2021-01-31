@@ -8,7 +8,7 @@ export const Header = () => {
     const dispatch = useDispatch();
 
     return (
-        <header className="w-full bg-blue-500 flex flex-col md:flex-row justify-between py-5 px-16 lg:px-32 items-center space-y-4 sm:space-y-8 md:space-y-0 fixed z-10">
+        <header className="w-full bg-blue-500 flex flex-col md:flex-row justify-between py-3 px-16 lg:px-32 items-center space-y-4 sm:space-y-8 md:space-y-0 fixed z-10">
             <h1 className="text-2xl sm:text-3xl text-white font-bold text-center"><Link to="/">Página Principal</Link></h1>
             <nav className="flex items-center">
                 <ul className="flex sm:space-x-10 flex-col items-center sm:flex-row text-white font-bold ">

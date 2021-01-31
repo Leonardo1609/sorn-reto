@@ -1,4 +1,4 @@
-import { IVehicle, IVehicleAction } from "../interfaces/interfaces"
+import { IVehicleAction } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
 const initialState = {
@@ -6,7 +6,7 @@ const initialState = {
     activeVehicle: null
 }
 
-export default (state = initialState, { type, payload }: IVehicleAction ) => {
+export const vehiclesReducer = (state = initialState, { type, payload }: IVehicleAction ) => {
     switch (type) {
 
     case types.setVehicles:

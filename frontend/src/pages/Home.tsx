@@ -12,6 +12,7 @@ export const Home = () => {
         dispatch( startGetUsers() );
         dispatch( startGetObservationsStatesPerUser() );
         dispatch( startGetQuantityObservationPerState() );
+        // eslint-disable-next-line
     }, [ ]);
 
     return (

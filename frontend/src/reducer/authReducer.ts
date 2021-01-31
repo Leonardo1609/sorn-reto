@@ -6,7 +6,7 @@ const initialState = {
     authenticated: false
 }
 
-export default (state = initialState, { type, payload }: IAuthReducer) => {
+export const authReducer = (state = initialState, { type, payload }: IAuthReducer) => {
     switch (type) {
         case types.login:
         case types.createAccount:

@@ -5,7 +5,7 @@ const initialState = {
     users: [],
 }
 
-export default (state = initialState, { type, payload }: IUserAction ) => {
+export const usersReducer = (state = initialState, { type, payload }: IUserAction ) => {
     switch (type) {
 
     case types.setUsers:
