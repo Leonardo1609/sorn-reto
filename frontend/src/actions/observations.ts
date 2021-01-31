@@ -153,7 +153,7 @@ export const setObservations = ( observations: IObservation[] ) => ({
     payload: { observations }
 });
 
-export const setActiveObservation = ( observation: IObservation ) => ({
+export const setActiveObservation = ( observation: IObservation | null ) => ({
     type: types.activeObservation,
     payload: { observation }
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setWantEditDetail, startCreateObservation, startModifyObservationDetail } from "../actions/observations";
+import { setActiveObservation, setWantEditDetail, startCreateObservation, startModifyObservationDetail } from "../actions/observations";
 import { setShowModal } from "../actions/ui";
 import { useForm } from "../hooks/useForm";
 import { IObservationValues } from "../interfaces/interfaces";
@@ -33,6 +33,12 @@ export const ObservationForm = () => {
         reset( initialValues );
     }
 
+    function closeObservationFrom () {
+        dispatch( setWantEditDetail( false ));
+        dispatch( setActiveObservation( null ) ) 
+        dispatch( setShowModal( false, null ) );
+    }
+
     return (
         <form 
             onSubmit={ handleSubmit }
@@ -41,7 +47,7 @@ export const ObservationForm = () => {
         >
             <div className="mb-5">
                 <span 
-                    onClick={ dispatch.bind( this, setShowModal( false, null ) ) } 
+                    onClick={ closeObservationFrom } 
                     className="float-right text-xl cursor-pointer font-bold text-gray-700"
                 >x</span>
             </div>
