@@ -1,16 +1,26 @@
-import { IAuthReducer } from "../interfaces/interfaces"
+import { IAuthReducer, IUser } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
-const initialState = {
-    user: '',
-    authenticated: false
+export interface IAuthStateSelector {
+    auth: IAuthState
+}
+interface IAuthState {
+    user: IUser | null,
+    authenticated: boolean,
+    token: string
 }
 
-export const authReducer = (state = initialState, { type, payload }: IAuthReducer) => {
+const initialState: IAuthState = {
+    user: null,
+    authenticated: false,
+    token: ''
+}
+
+export const authReducer = (state = initialState, { type, payload }: IAuthReducer): IAuthState => {
     switch (type) {
         case types.login:
         case types.createAccount:
-            localStorage.setItem('token', payload.token)
+            localStorage.setItem('token', payload.token )
             return {
                 ...state,
                 authenticated: true,

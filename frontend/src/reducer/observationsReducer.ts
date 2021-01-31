@@ -1,7 +1,18 @@
-import { IObservation, IObservationAction } from "../interfaces/interfaces"
+import { IObservation, IObservationAction, IObservationsStatesPerUser, IQuantityObervationPerState } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
-const initialState = {
+export interface IObservationsStateSelector {
+    observations: IObservationsState
+}
+export interface IObservationsState {
+    observations: IObservation[],
+    activeObservation: IObservation | null,
+    wantEditDetail: boolean,
+    observationsStatesPerUser: IObservationsStatesPerUser[],
+    quantityObservationsPerState: IQuantityObervationPerState[]
+}
+
+const initialState: IObservationsState = {
     observations: [],
     activeObservation: null,
     wantEditDetail: false,
@@ -9,7 +20,7 @@ const initialState = {
     quantityObservationsPerState: []
 }
 
-export const observationsReducer = (state = initialState, { type, payload }: IObservationAction) => {
+export const observationsReducer = (state = initialState, { type, payload }: IObservationAction): IObservationsState => {
     switch (type) {
 
         case types.setObservations:
@@ -60,7 +71,7 @@ export const observationsReducer = (state = initialState, { type, payload }: IOb
         case types.observationsStatesPerUser:
             return {
                 ...state,
-                observationsStatesPerUser: payload
+                observationsStatesPerUser: payload.observationStatesPerUser
             }
         case types.qObservationsPerState:
             return {

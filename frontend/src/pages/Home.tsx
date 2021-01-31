@@ -13,7 +13,7 @@ export const Home = () => {
         dispatch( startGetObservationsStatesPerUser() );
         dispatch( startGetQuantityObservationPerState() );
         // eslint-disable-next-line
-    }, [ ]);
+    }, []);
 
     return (
         <div className="w-full flex justify-center bg-gray-200 m-h-100 relative">

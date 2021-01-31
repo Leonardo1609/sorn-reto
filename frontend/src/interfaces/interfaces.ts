@@ -19,7 +19,7 @@ export interface IAuthReducer {
 export interface IUser {
     id: number,
     username: string,
-    role: string | null
+    role?: string | null
 }
 
 export interface IUserAction {
@@ -74,10 +74,8 @@ export interface IObservationAction {
             id: number,
             detail: string
         },
-        quantityObservationPerState: {
-            idState: number,
-            count: number
-        }[]
+        observationStatesPerUser: IObservationsStatesPerUser[],
+        quantityObservationPerState: IQuantityObervationPerState[]
     }
 }
 export interface IUi {
@@ -90,4 +88,16 @@ export interface IUi {
         showObservationActions: boolean,
         loadingUser: boolean
     },
+}
+
+export interface IObservationsStatesPerUser {
+    username: string,
+    registered: number,
+    accepted: number,
+    rejected: number
+}
+
+export interface IQuantityObervationPerState {
+    idState: number,
+    count: number 
 }

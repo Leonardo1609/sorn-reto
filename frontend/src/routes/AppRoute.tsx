@@ -12,6 +12,8 @@ import { getUser } from '../actions/auth';
 import { useEffect } from 'react';
 import { Header } from '../components/Header';
 import { Loading } from '../components/Loading';
+import { IAuthStateSelector } from '../reducer/authReducer';
+import { IUiStateSelector } from '../reducer/uiReducer';
 
 export const AppRoute = () => {
 
@@ -23,8 +25,8 @@ export const AppRoute = () => {
 
     const dispatch = useDispatch();
 
-    const isLoggedIn = useSelector( ( state: any ) => state.auth.authenticated );
-    const loadingUser = useSelector( ( state: any ) => state.ui.loadingUser );
+    const isLoggedIn = useSelector( ( state: IAuthStateSelector ) => state.auth.authenticated );
+    const loadingUser = useSelector( ( state: IUiStateSelector ) => state.ui.loadingUser );
 
     useEffect(() => {
         if( token ){

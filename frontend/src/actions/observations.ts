@@ -1,8 +1,12 @@
 import { Dispatch } from "redux"
 import { clientAxios } from "../config/clientAxios"
-import { IObservation, IUser } from "../interfaces/interfaces";
+import { IObservation, IObservationsStatesPerUser, IQuantityObervationPerState, IUser } from "../interfaces/interfaces";
 import { types } from "../types/types";
 import Swal from "sweetalert2";
+import { IUsersStateSelector } from "../reducer/usersReducer";
+import { IVehiclesStateSelector } from "../reducer/vehiclesReducer";
+import { IObservationsStateSelector } from "../reducer/observationsReducer";
+import { IAuthStateSelector } from "../reducer/authReducer";
 
 export const startGetObservations = () => {
     return async ( dispatch: Dispatch ) => {
@@ -33,9 +37,10 @@ export const startGetObservations = () => {
 }
 
 export const startCreateObservation = ( detail: string ) => {
-    return async ( dispatch: Dispatch, getState: any ) => {
+    return async ( dispatch: Dispatch, getState: () => IVehiclesStateSelector ) => {
         try {
-            const vehicleId = getState().vehicles.activeVehicle.id;
+            const vehicle = getState().vehicles.activeVehicle;
+            const vehicleId = vehicle?.id;
             await clientAxios.post(`/observation/${ vehicleId }`, { detail });
             Swal.fire(
               'Observación agregada',
@@ -53,12 +58,18 @@ export const startCreateObservation = ( detail: string ) => {
 }
 
 export const startSolveObservation = ( idState: number ) => {
-    return async ( dispatch: Dispatch, getState: any ) => {
+    return async ( dispatch: Dispatch, getState: () => IObservationsStateSelector & IAuthStateSelector ) => {
         try {
-            const { id: observationId } = getState().observations.activeObservation;
-            const { username } = getState().auth.user;
+            const activeObservation = getState().observations.activeObservation;
+            const user = getState().auth.user;
+
+            const observationId = activeObservation?.id;
+            const username = user?.username;
+
             const { data } = await clientAxios.patch( `observation/solve/${ observationId }`, { idState } );
-            dispatch( updateStateObservation( data.observation.id, data.observation.idState, username ) )
+
+            username && dispatch( updateStateObservation( data.observation.id, data.observation.idState, username ) );
+
             Swal.fire(
               'Observación actualizada',
               'La observación se actualizó con éxito',
@@ -75,11 +86,15 @@ export const startSolveObservation = ( idState: number ) => {
 }
 
 export const startModifyObservationDetail = ( detail: string ) => {
-    return async ( dispatch: Dispatch, getState: any ) => {
+    return async ( dispatch: Dispatch, getState: () => IObservationsStateSelector ) => {
         try {
-            const { id: observationId } = getState().observations.activeObservation;
+            const activeObservation = getState().observations.activeObservation;
+            const observationId = activeObservation?.id;
+
             const { data } = await clientAxios.patch(`/observation/${ observationId }`, { detail });
-            dispatch( modifyObservationDetail( observationId, data.observation.detail ) );
+
+            observationId && dispatch( modifyObservationDetail( observationId, data.observation.detail ) );
+
             Swal.fire(
               'Observación editada',
               'La observación se editó con éxito',
@@ -97,10 +112,11 @@ export const startModifyObservationDetail = ( detail: string ) => {
 }
 
 export const startDeleteObservation = () => {
-    return ( dispatch: Dispatch, getState: any ) => {
+    return ( dispatch: Dispatch, getState: () => IObservationsStateSelector ) => {
         try {
 
-            const { id: observationId } = getState().observations.activeObservation;
+            const activeObservation = getState().observations.activeObservation;
+            const observationId = activeObservation?.id;
 
             Swal.fire({
               title: '¿Estás seguro?',
@@ -113,7 +129,7 @@ export const startDeleteObservation = () => {
             }).then( async (result) => {
               if (result.isConfirmed) {
                 await clientAxios.delete(`/observation/${ observationId }`);
-                dispatch( deleteObservation( observationId ) );
+                observationId && dispatch( deleteObservation( observationId ) );
                 Swal.fire(
                   'Observación eliminada',
                   'La observación se eliminó con éxito',
@@ -152,7 +168,8 @@ export const updateStateObservation = ( id: number, idState: number, solver: str
 });
 
 export const startGetObservationsStatesPerUser = () => {
-    return async ( dispatch: Dispatch, getState: any ) => {
+    return async ( dispatch: Dispatch, getState: () => IUsersStateSelector ) => {
+
         try {
             const { data } = await clientAxios.get('/observation/observation-per-user');
             const { users } = getState().users;
@@ -163,9 +180,9 @@ export const startGetObservationsStatesPerUser = () => {
                 data.find( ( item: any ) => item.createdBy === userId && item.idState === idState )?.observationQuantity || 0
             ) 
 
-            const observationsPerUser = users.map( ( user: IUser ) => ({
+            const observationsPerUser: IObservationsStatesPerUser[] = users.map( ( user: IUser ) => ({
                     username: user.username,
-                    registers: quantityPerState( data.observations, 1, user.id ),
+                    registered: quantityPerState( data.observations, 1, user.id ),
                     accepted: quantityPerState( data.observations, 2, user.id ),
                     rejected: quantityPerState( data.observations, 3, user.id ),
             }) );
@@ -204,12 +221,12 @@ export const modifyObservationDetail = ( id: number, detail: string ) => ({
     payload: { observationToModify: { id, detail } }
 });
 
-export const setObservationsStatesPerUser = ( observationsQuantity: [] ) => ({
+export const setObservationsStatesPerUser = ( observationsQuantity: IObservationsStatesPerUser[] ) => ({
     type: types.observationsStatesPerUser,
-    payload: observationsQuantity 
+    payload: { observationStatesPerUser : observationsQuantity }
 })
 
-export const setQObservationPerState = ( observationsPerState: [] ) => ({
+export const setQObservationPerState = ( observationsPerState: IQuantityObervationPerState[] ) => ({
     type: types.qObservationsPerState,
     payload: { quantityObservationPerState: observationsPerState }
     

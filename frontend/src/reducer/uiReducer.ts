@@ -1,7 +1,20 @@
+import { ElementType } from "react"
 import { IUi } from "../interfaces/interfaces"
 import { types } from "../types/types"
 
-const initialState = {
+export interface IUiStateSelector {
+    ui: IUiState
+}
+interface IUiState {
+    showModal: {
+        bool: boolean,
+        component: ElementType | null,
+    },
+    showObservationActions: boolean,
+    loadingUser: boolean
+}
+
+const initialState: IUiState = {
     showModal: {
         bool: false,
         component: null
@@ -11,7 +24,7 @@ const initialState = {
 
 }
 
-export const uiReducer = (state = initialState, { type, payload }: IUi) => {
+export const uiReducer = (state = initialState, { type, payload }: IUi): IUiState => {
     switch (type) {
 
     case types.showModal:

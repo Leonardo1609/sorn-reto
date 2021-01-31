@@ -4,6 +4,7 @@ import { setWantEditDetail, startCreateObservation, startModifyObservationDetail
 import { setShowModal } from "../actions/ui";
 import { useForm } from "../hooks/useForm";
 import { IObservationValues } from "../interfaces/interfaces";
+import { IObservationsStateSelector } from "../reducer/observationsReducer";
 import { createObservationValidation } from "../validations/createObservationValidation";
 import { Button } from "./Button";
 
@@ -13,10 +14,10 @@ export const ObservationForm = () => {
     }
 
     const dispatch = useDispatch();
-    const wantEditDetail = useSelector( ( state: any ) => state.observations.wantEditDetail );
-    const activeObservation = useSelector( ( state: any ) => state.observations.activeObservation );
+    const wantEditDetail = useSelector( ( state: IObservationsStateSelector ) => state.observations.wantEditDetail );
+    const activeObservation = useSelector( ( state: IObservationsStateSelector ) => state.observations.activeObservation );
 
-    const valuesToForm = wantEditDetail ? { detail: activeObservation.detail } : initialValues;
+    const valuesToForm = wantEditDetail ? { detail: activeObservation?.detail } : initialValues;
 
     const { formValues, handleChange, handleSubmit, errors, reset } = useForm( valuesToForm, createObservationValidation, registerSubmit ),
           { detail } = formValues as IObservationValues;

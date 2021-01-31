@@ -1,7 +1,10 @@
 import { useSelector } from "react-redux"
+import { IObservationsStatesPerUser } from "../interfaces/interfaces";
+import { IObservationsStateSelector } from "../reducer/observationsReducer";
 
 export const ObservationPerUsers = () => {
-    const observationsStatesPerUser = useSelector( ( state: any ) => state.observations.observationsStatesPerUser );
+    const observationsStatesPerUser = useSelector( ( state: IObservationsStateSelector ) => state.observations.observationsStatesPerUser );
+
     return (
         <>
             <h2 className="text-xl font-bold">Observaciones por empleado</h2>
@@ -15,10 +18,10 @@ export const ObservationPerUsers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    { observationsStatesPerUser && observationsStatesPerUser.map( ( item: any ) => (
+                    { observationsStatesPerUser.length > 0 && observationsStatesPerUser.map( ( item: IObservationsStatesPerUser ) => (
                         <tr key={ item.username }>
                             <td className="text-center border-t border-blue-500">{ item.username }</td>
-                            <td className="text-center border-t border-blue-500">{ item.registers }</td>
+                            <td className="text-center border-t border-blue-500">{ item.registered }</td>
                             <td className="text-center border-t border-blue-500">{ item.accepted }</td>
                             <td className="text-center border-t border-blue-500">{ item.rejected }</td>
                         </tr>

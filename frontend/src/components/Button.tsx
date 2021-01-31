@@ -2,7 +2,7 @@ interface IButtonProps {
     value: string,
     className: string,
     type: 'button' | 'submit',
-    fn?: any
+    fn?: () => void
 }
 
 export const Button = ({ value, className, type, fn }: IButtonProps ) => {

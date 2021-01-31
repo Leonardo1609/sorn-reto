@@ -7,16 +7,19 @@ import { setShowObservationActions } from '../actions/ui';
 import { Modal } from '../components/Modal';
 import { ObservationActions } from '../components/ObservationActions';
 import { IObservation } from '../interfaces/interfaces';
+import { IAuthStateSelector } from '../reducer/authReducer';
+import { IObservationsStateSelector } from '../reducer/observationsReducer';
+import { IUiStateSelector } from '../reducer/uiReducer';
 
 export const Observations = () => {
 
 
     const dispatch = useDispatch();
-    const observations = useSelector( ( state: any ) => state.observations.observations );
-    const activeObservation = useSelector( ( state: any ) => state.observations.activeObservation );
-    const showModal = useSelector( ( state: any ) => state.ui.showModal );
-    const showObservationActions = useSelector( ( state: any ) => state.ui.showObservationActions );
-    const user = useSelector( ( state: any ) => state.auth.user );
+    const observations = useSelector( ( state: IObservationsStateSelector ) => state.observations.observations );
+    const activeObservation = useSelector( ( state: IObservationsStateSelector ) => state.observations.activeObservation );
+    const showModal = useSelector( ( state: IUiStateSelector ) => state.ui.showModal );
+    const showObservationActions = useSelector( ( state: IUiStateSelector ) => state.ui.showObservationActions );
+    const user = useSelector( ( state: IAuthStateSelector ) => state.auth.user );
 
     useEffect( () => {
         dispatch( startGetObservations() );
@@ -24,16 +27,20 @@ export const Observations = () => {
 
     const openObservationActions = ( observation: IObservation ) => {
         dispatch( setActiveObservation( observation ) );
-        dispatch( setShowObservationActions( !showObservationActions ) );
+        if( activeObservation === observation && showObservationActions ){
+            dispatch( setShowObservationActions( false ) );
+        } else {
+            dispatch( setShowObservationActions( true ) );
+        }
     }
 
     const backgroundState = ( state: string ) => state === 'rechazado' ? 'bg-yellow-500' : state === 'aceptado' ? 'bg-green-500' : 'bg-blue-500' 
 
-    const creatorRow = ( username: string ) => username === user.username && 'font-bold';
+    const creatorRow = ( username: string ) => ( username === user?.username ) && 'font-bold';
 
     return (
         <div className="min-w-full flex justify-center bg-gray-200 m-h-100 relative">
-            { showModal.bool && <Modal 
+            { ( showModal.bool && showModal.component ) && <Modal 
                 component={ showModal.component }
             /> }
             <div className="w-full p-4 md:w-3/4 mt-60 md:mt-36">

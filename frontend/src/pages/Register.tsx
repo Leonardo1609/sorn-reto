@@ -61,7 +61,7 @@ export const Register = () => {
                     />
                     <span className="text-sm font-bold text-red-500">{ errors['password'] }</span>
                 </div>
-                <Button 
+                <Button
                     type="submit" 
                     value="Registrarte"
                     className="w-full bg-blue-400 text-white p-3 rounded font-bold uppercase mt-8 hover:bg-blue-500 transition duration-300"

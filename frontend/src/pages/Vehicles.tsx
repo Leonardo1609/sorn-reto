@@ -7,26 +7,27 @@ import { Modal } from '../components/Modal';
 import { ObservationForm } from '../components/ObservationForm';
 import { VehicleForm } from '../components/VehicleForm';
 import { IVehicle } from '../interfaces/interfaces';
+import { IUiStateSelector } from '../reducer/uiReducer';
+import { IVehiclesStateSelector } from '../reducer/vehiclesReducer';
 
 export const Vehicles = () => {
 
     const dispatch = useDispatch();
-    const vehicles = useSelector( ( state: any ) => state.vehicles.vehicles );
-    const showModal = useSelector( ( state: any ) => state.ui.showModal );
+    const vehicles = useSelector( ( state: IVehiclesStateSelector ) => state.vehicles.vehicles );
+    const showModal = useSelector( ( state: IUiStateSelector ) => state.ui.showModal );
 
     useEffect( () => {
         dispatch( startGetVehicles() );
     }, [ dispatch ])
 
     const openObservationModal = ( vehicle: IVehicle ) => {
-        
         dispatch( setActiveVehicle( vehicle ) )
         dispatch( setShowModal( true, ObservationForm ) );
     }
 
     return (
         <div className="w-full flex justify-center bg-gray-200 m-h-100 relative">
-            { showModal.bool && <Modal 
+            { ( showModal.bool && showModal.component ) && <Modal 
                 component={ showModal.component } 
             /> }
             <div className="w-full p-4 md:w-2/4 mt-60 md:mt-36">

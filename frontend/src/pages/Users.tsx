@@ -7,20 +7,23 @@ import { Modal } from '../components/Modal';
 import { UserForm } from '../components/UserForm';
 import { IUser } from '../interfaces/interfaces';
 import Swal from 'sweetalert2';
+import { IAuthStateSelector } from '../reducer/authReducer';
+import { IUsersStateSelector } from '../reducer/usersReducer';
+import { IUiStateSelector } from '../reducer/uiReducer';
 
 export const Users = () => {
 
     const dispatch = useDispatch();
-    const { role } = useSelector( ( state: any ) => state.auth.user );
-    const users = useSelector( ( state: any ) => state.users.users );
-    const showModal = useSelector( ( state: any ) => state.ui.showModal );
+    const user  = useSelector( ( state: IAuthStateSelector ) => state.auth.user );
+    const users = useSelector( ( state: IUsersStateSelector ) => state.users.users );
+    const showModal = useSelector( ( state: IUiStateSelector ) => state.ui.showModal );
 
     useEffect( () => {
         dispatch( startGetUsers() );
     }, [ dispatch ])
 
     const openAddUserModal = () => {
-        if( role !== 'admin' ){
+        if( user?.role !== 'admin' ){
             return Swal.fire(
                     'No autorizado',
                     'Solo el administrador puede agregar usuarios',
@@ -32,7 +35,7 @@ export const Users = () => {
 
     return (
         <div className="w-full flex justify-center bg-gray-200 m-h-100 relative">
-            { showModal.bool && <Modal 
+            { ( showModal.bool && showModal.component ) && <Modal 
                 component={ showModal.component } 
             /> }
             <div className="w-full p-4 md:w-2/4 mt-60 md:mt-36">

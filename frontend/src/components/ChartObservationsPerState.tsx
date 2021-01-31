@@ -1,12 +1,14 @@
 import { HorizontalBar } from "react-chartjs-2"
 import { useSelector } from "react-redux";
+import { IQuantityObervationPerState } from "../interfaces/interfaces";
+import { IObservationsStateSelector } from "../reducer/observationsReducer";
 
 export const ChartObservationsPerState = () => {
 
-    const quantityObservationsPerState = useSelector( ( state: any ) => state.observations.quantityObservationsPerState );
+    const quantityObservationsPerState = useSelector( ( state: IObservationsStateSelector ) => state.observations.quantityObservationsPerState );
 
     const getQuantity = ( idState: number ) => ( 
-        quantityObservationsPerState.find( ( item: { idState: number, count: number } ) => item.idState === idState  )?.count || 0
+        quantityObservationsPerState.find( ( item: IQuantityObervationPerState ) => item.idState === idState  )?.count || 0
     );
 
     return (
@@ -47,7 +49,6 @@ export const ChartObservationsPerState = () => {
                                     if (Math.floor(label) === label) {
                                         return label;
                                     }
-
                                 },
                             },
                             scaleLabel: {

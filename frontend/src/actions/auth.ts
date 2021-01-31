@@ -6,7 +6,7 @@ import { types } from "../types/types";
 import { setLoadingUser } from "./ui";
 import Swal from 'sweetalert2';
 
-export const getUser = (): any => {
+export const getUser = () => {
     return async ( dispatch: Dispatch ) => {
         try {
             dispatch( setLoadingUser( true ) );
@@ -30,8 +30,7 @@ export const startCreateAccount = ( username: string, password: string ) => {
     return async ( dispatch: Dispatch ) => {
         try {
             const { data } = await clientAxios.post('/auth', { username, password });
-            dispatch( createAccount( data ) );
-
+            dispatch( createAccount( data.token ) );
             getUser();
 
         } catch (error) {
@@ -50,9 +49,8 @@ export const startLoginUser = ( username: string, password: string ) => {
         try {
             const { data } = await clientAxios.post('/auth/signin', { username, password });
 
-            dispatch( loginUser( data ) );
-
-            await getUser();
+            dispatch( loginUser( data.token ) );
+            getUser();
 
         } catch (error) {
             console.log( error.response );
@@ -67,12 +65,12 @@ export const startLoginUser = ( username: string, password: string ) => {
 
 export const createAccount = ( token: string ) => ({
     type: types.createAccount,
-    payload: token
+    payload: { token }
 })
 
-export const loginUser = ( token: string ) => ({
+export const loginUser = ( token: string ) => ({  
     type: types.login,
-    payload: token
+    payload: { token }
 })
 
 export const setUser = ( user: IUser ) => ({
