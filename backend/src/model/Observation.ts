@@ -1,10 +1,19 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { db } from "../config/db";
 import State from "./State";
 import User from "./User";
 import Vehicle from "./Vehicle";
 
-const Observation = db.define('Observation', {
+interface IVehicle extends Model {
+    id?: number,
+    detail: string,
+    vehicleId: number,
+    idState: number,
+    solvedBy?: number,
+    createdBy: number 
+}
+
+const Observation = db.define<IVehicle>('Observation', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

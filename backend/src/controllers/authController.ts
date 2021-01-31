@@ -18,9 +18,8 @@ export const registUser = async ( req: Request, res: Response ) => {
             where: { username }
         });
 
-        if ( userExists ) {
-            res.status( 301 ).json({ msg: 'El usuario ya se encuentra en existencia' });
-        }
+        if ( userExists ) return res.status( 400 ).json({ msg: 'El usuario ya se encuentra en existencia' });
+        
     
         const salt = await bcrypt.genSalt( 10 );
         const hashedPass = bcrypt.hashSync( password, salt );
@@ -47,10 +46,11 @@ export const registUser = async ( req: Request, res: Response ) => {
 // Verify user after the auth middleware ( route/auth.ts : 16 )
 export const verifyUser = async ( req: any, res: Response ) => {
 
-    const id = req.userId;
-
     try {
-        const user: any = await User.findByPk( id );
+        const id = req.userId;
+
+        const user = await User.findByPk( id, { rejectOnEmpty: true } );
+
         res.json({ user: { username: user.username, id: user.id, role: user.role  } });
     } catch (error) {
         console.log( error );
@@ -67,7 +67,7 @@ export const signInUser = async ( req: Request, res: Response ) => {
     try {
         const { username, password } = req.body;
 
-        const user: any = await User.findOne({ 
+        const user = await User.findOne({ 
             where: {
                 username
             }
@@ -100,9 +100,9 @@ export const signInUser = async ( req: Request, res: Response ) => {
 // Create user by admin
 export const createUserByAdmin = async ( req: any, res: Response ) => {
 
-    const id = req.userId;
+    const id = Number(req.userId);
 
-    const user: any = await User.findByPk( id );
+    const user = await User.findByPk( id, { rejectOnEmpty: true } );
 
     if( user.role !== 'admin' ) return res.status( 403 ).json({ msg: 'No autorizado' })
 
@@ -123,7 +123,7 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
         const salt = await bcrypt.genSalt( 10 );
         const hashedPass = await bcrypt.hashSync( password, salt );
 
-        const user: any = await User.create({ username, password: hashedPass });
+        const user = await User.create({ username, password: hashedPass });
 
         res.json({ user: { username: user.username, id: user.id } });
 
@@ -134,7 +134,7 @@ export const createUserByAdmin = async ( req: any, res: Response ) => {
 }
 
 // Get all users
-export const getUsers = async ( req: Request, res: Response ) => {
+export const getUsers = async ( req: any, res: Response ) => {
     try {
         const users = await User.findAll({ attributes: ['id', 'username']})    
 

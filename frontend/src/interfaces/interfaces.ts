@@ -1,5 +1,6 @@
 import { ElementType } from "react";
 
+// Auth
 export interface ILoginvalues {
     username: string,
     password: string
@@ -22,6 +23,7 @@ export interface IUser {
     role?: string | null
 }
 
+// User
 export interface IUserAction {
     type: string,
     payload: {
@@ -29,6 +31,8 @@ export interface IUserAction {
         user: IUser
     }
 }
+
+// Vehicle
 
 export interface IVehicle {
     id: string,
@@ -46,6 +50,7 @@ export interface IVehicleValues {
     vin: string
 }
 
+// Observation
 export interface IObservationValues {
     detail: string
 }
@@ -78,17 +83,6 @@ export interface IObservationAction {
         quantityObservationPerState: IQuantityObervationPerState[]
     }
 }
-export interface IUi {
-    type: string,
-    payload: {
-        showModal: {
-            bool: boolean,
-            component: ElementType | null
-        },
-        showObservationActions: boolean,
-        loadingUser: boolean
-    },
-}
 
 export interface IObservationsStatesPerUser {
     username: string,
@@ -100,4 +94,15 @@ export interface IObservationsStatesPerUser {
 export interface IQuantityObervationPerState {
     idState: number,
     count: number 
+}
+export interface IUi {
+    type: string,
+    payload: {
+        showModal: {
+            bool: boolean,
+            component: ElementType | null
+        },
+        showObservationActions: boolean,
+        loadingUser: boolean
+    },
 }

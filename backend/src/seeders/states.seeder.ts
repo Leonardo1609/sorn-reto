@@ -1,10 +1,10 @@
-import State from "../model/State";
+import State, { IState } from "../model/State";
 
 export default async () => {
     try {
         const states = [ 'registrado', 'aceptado', 'rechazado' ];
 
-        let statePromises: any[] = [];
+        let statePromises: Promise<IState>[] = [];
 
         const statesExists = await State.findAll();
 

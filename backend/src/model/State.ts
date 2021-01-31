@@ -1,7 +1,12 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { db } from "../config/db";
 
-const State = db.define('State', {
+export interface IState extends Model {
+    id: number,
+    name: string
+}
+
+const State = db.define<IState>('State', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,

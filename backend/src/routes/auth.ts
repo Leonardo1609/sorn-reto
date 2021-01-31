@@ -13,8 +13,8 @@ const router = Router();
 export default () => {
 
     router.post('/', [
-        check('username', 'Username field require between 6-15 characters').isLength({ min: 6, max: 15 }).trim().escape(),
-        check('password', 'Password field require between 6-15 characters').isLength({ min: 6, max: 15 }).trim().escape(),
+        check('username', 'Username field require between 6-45 characters').isLength({ min: 6, max: 45 }).trim().escape(),
+        check('password', 'Password field require between 6-45 characters').isLength({ min: 6, max: 45 }).trim().escape(),
     ], registUser )
 
     router.get('/',

@@ -25,13 +25,13 @@ export const createObservation = async ( req: any, res: Response ) => {
 // Update (solve) the state of observation ( just the owner of the observation can't do this )
 export const updateStateOfVehicle = async ( req: any, res: Response ) => {
     try {
-        const userId = req.userId;
+        const userId = Number(req.userId);
         const observationId = req.params.observationId;
 
         const { idState } = req.body;
 
         const stateExists = await State.findByPk( idState );
-        const observation: any = await Observation.findByPk( observationId );
+        const observation = await Observation.findByPk( observationId );
 
         if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrda" });
 
@@ -56,11 +56,11 @@ export const updateStateOfVehicle = async ( req: any, res: Response ) => {
 // Modify detail of observation ( just the owner of the observation can do this )
 export const updateObservation = async ( req: any, res: Response ) => {
     try {
-        const userId = req.userId;
+        const userId = Number(req.userId);
         const observationId = req.params.observationId;
         const { detail } = req.body;
         
-        const observation: any = await Observation.findByPk( observationId );
+        const observation = await Observation.findByPk( observationId );
 
         if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrada" });
         
@@ -82,10 +82,10 @@ export const updateObservation = async ( req: any, res: Response ) => {
 
 export const deleteObservation = async ( req: any, res: Response ) => {
     try {
-        const userId = req.userId;
+        const userId = Number(req.userId);
         const observationId = req.params.observationId;
 
-        const observation: any = await Observation.findByPk( observationId );
+        const observation = await Observation.findByPk( observationId );
 
         if( !observation ) return res.status( 404 ).json({ msg: "Observación no encontrada" });
 
@@ -131,7 +131,7 @@ export const getObservations = async ( req: any, res: Response ) => {
 
 export const getCountObservationPerState = async ( req: any, res: Response ) => {
     try {
-        const { count }: any = await Observation.findAndCountAll({ 
+        const { count } = await Observation.findAndCountAll({ 
             attributes: [ 'idState' ], 
             group: [ 'idState' ]
         });

@@ -1,7 +1,13 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { db } from "../config/db";
 
-const Vehicle = db.define('Vehicle', {
+interface IVehicle extends Model {
+    id: number,
+    vin: string
+}
+
+
+const Vehicle = db.define<IVehicle>('Vehicle', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
