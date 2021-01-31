@@ -13,7 +13,7 @@
 2. Configurar el archivo **.env** del backend con las credenciales de la instancia local de MySQL
 3. Desde una terminal entrar a la carpeta backend y ejecutar `npm install`, realizar lo mismo con la carpeta frontend.
 4. Iniciar el servidor desde una terminal dentro de la carpeta backend ejecutando `npm start`. Una vez inicializado el servidor, seguir el mismo paso con la carpeta frontend.
-5 Ingresar desde el navegador a [http://localhost:3000](http://localhost:3000) 
+5. Ingresar desde el navegador a [http://localhost:3000](http://localhost:3000) 
 6. En el login, ingresar el usuario **sornadmin** y el password **admin123**, que son las credenciales que se crea por defecto para el usuario administrador.
 
 ## Con Docker:
